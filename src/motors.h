@@ -57,5 +57,5 @@ void engineSET()
     pinMode(DIR_B, OUTPUT);
     delay(10);
 
-    log(String(("engineSET_FINISHED_in ") + String(millis() - engineSETtime)));
+    log(String(("FINISHED in  ") + String(millis() - engineSETtime)) + String("s"));
 }
