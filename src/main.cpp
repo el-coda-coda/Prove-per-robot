@@ -8,10 +8,11 @@
 
 
 
-void setup() {
-  Serial.begin(115200);
-  log(engineSET());
-
+void setup() 
+{
+  Wire.begin();
+  Serial.begin(115200); 
+  engineSET();
 }
 
 void loop() {

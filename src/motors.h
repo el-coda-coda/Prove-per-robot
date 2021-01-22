@@ -9,7 +9,7 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, HIGH);
     digitalWrite(DIR_B, HIGH);
-    dir = "STRAIGHT";
+    dir = STRAIGHT;
   }
 
   if (direction == BACK)
@@ -18,7 +18,7 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, LOW);
     digitalWrite(DIR_B, LOW);
-    dir = "BACK";
+    dir = BACK;
   }
 
   if (direction == RIGHT)
@@ -46,10 +46,10 @@ void engineOFF()
     engineON(0, STRAIGHT);
 }
 
-String engineSET()
+void engineSET()
 {   
     log(String("engineSET_START"));
-    long engineSETtime = millis();
+    unsigned long engineSETtime = millis();
 
     pinMode(PWR_A, OUTPUT);
     pinMode(PWR_B, OUTPUT);
@@ -57,5 +57,5 @@ String engineSET()
     pinMode(DIR_B, OUTPUT);
     delay(10);
 
-    return String(("engineSET_FINISHED ") + (millis() - engineSETtime));
+    log(String(("engineSET_FINISHED_in ") + String(millis() - engineSETtime)));
 }
