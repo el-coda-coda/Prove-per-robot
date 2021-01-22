@@ -14,4 +14,5 @@ String dir;
 
 String LEFT = "LEFT";
 String RIGHT = "RIGHT";
-
+String STRAIGHT = "STRAIGHT";
+String BACK = "BACK";
