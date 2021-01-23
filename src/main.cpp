@@ -5,7 +5,7 @@
 #include <config.h>
 #include <log.h>
 #include <motors.h>
-
+#include <QMC5883.h>
 
 
 void setup() 
