@@ -11,7 +11,6 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, HIGH);
     digitalWrite(DIR_B, HIGH);
-    dir = STRAIGHT;
   }
 
   if (direction == BACK)
@@ -20,7 +19,6 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, LOW);
     digitalWrite(DIR_B, LOW);
-    dir = BACK;
   }
 
   if (direction == RIGHT)
@@ -29,7 +27,6 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, HIGH);
     digitalWrite(DIR_B, LOW);
-    dir = RIGHT;
   }
 
   if (direction == LEFT)
@@ -38,7 +35,6 @@ void engineON(int pwr, String direction)
     analogWrite(PWR_B, pwr_control);
     digitalWrite(DIR_A, LOW);
     digitalWrite(DIR_B, HIGH);
-    dir = RIGHT;
   }
 
 }

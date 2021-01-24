@@ -6,6 +6,7 @@
 #include <log.h>
 #include <motors.h>
 #include <QMC5883.h>
+#include <segments.h>
 
 void setup() 
 {

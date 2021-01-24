@@ -53,7 +53,7 @@ int compassDeg (int deg_set, int deg, String direction)
     if (direction == RIGHT)   deg_diff = deg_final - compassReadFast();
     if (direction == LEFT)    deg_diff = compassReadFast() - deg_final;
 
-    delay(20);
+    delay(10);
 
     if(LOG_LEVEL == VERBOSE)    log(String("DEG_DIFF: ") + String(deg_diff));
     
