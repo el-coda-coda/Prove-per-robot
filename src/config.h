@@ -8,6 +8,10 @@
 #define DIR_A   4
 #define DIR_B   12
 
+//QMC5883L
+
+unsigned int deg_threshold;
+
 //COMUNICATION
 
 String dir;

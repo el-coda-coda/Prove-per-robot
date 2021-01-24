@@ -7,7 +7,7 @@
 #include <motors.h>
 #include <QMC5883.h>
 
-LOG_LEVEL = "INFO";
+LOG_LEVEL = INFO;
 
 void setup() 
 {
