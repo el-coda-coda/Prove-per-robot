@@ -16,10 +16,10 @@ void compassSET()
 int compassReadFast()
 {
     compass.read();
-    unsigned int getAzimuth = compass.getAzimuth();
+    unsigned int Azimuth = compass.getAzimuth();
 
-    if (LOG_LEVEL == VERBOSE)  log(String("compassREAD ") + String(getAZimuth));
-    return getAzimuth;
+    if (LOG_LEVEL == VERBOSE)  log(String("compassREAD ") + String(Azimuth));
+    return Azimuth;
 }
 
 int compassReadMedia()

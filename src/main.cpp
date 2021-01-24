@@ -7,10 +7,9 @@
 #include <motors.h>
 #include <QMC5883.h>
 
-LOG_LEVEL = INFO;
-
 void setup() 
 {
+  LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
   engineSET();

@@ -20,7 +20,7 @@ String LEFT = "LEFT";
 String RIGHT = "RIGHT";
 String STRAIGHT = "STRAIGHT";
 String BACK = "BACK";
-String LOG_LEVEL = "INFO";
+String LOG_LEVEL;
 String INFO = "INFO";
 String VERBOSE = "VERBOSE";
 String DEBUG = "DEBUG";
