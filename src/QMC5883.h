@@ -18,7 +18,7 @@ int compassReadFast()
     compass.read();
     unsigned int getAzimuth = compass.getAzimuth();
 
-    log(String("compassREAD ") + String());
+    log(String("compassREAD ") + String(getAZimuth));
     return getAzimuth;
 }
 

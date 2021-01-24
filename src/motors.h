@@ -3,6 +3,8 @@ void engineON(int pwr, String direction)
 
   float pwr_control = pwr * 2.55;
 
+  if (LOG_LEVEL == VERBOSE)  log(String("engineON_") + String (direction));
+
   if (direction == STRAIGHT)  
   {
     analogWrite(PWR_A, pwr_control);
@@ -43,19 +45,19 @@ void engineON(int pwr, String direction)
 
 void engineOFF()
 {
-    engineON(0, STRAIGHT);
+  if (LOG_LEVEL == VERBOSE)  log(String("engineOFF"));
+  engineON(0, STRAIGHT);
 }
 
 void engineSET()
 {   
-    log(String("engineSET_START"));
-    unsigned long engineSETtime = millis();
+  if (LOG_LEVEL == INFO)  log(String("engineSET_START"));
+  unsigned long engineSETtime = millis();
+  pinMode(PWR_A, OUTPUT);
+  pinMode(PWR_B, OUTPUT);
+  pinMode(DIR_A, OUTPUT);
+  pinMode(DIR_B, OUTPUT);
+  delay(10);
 
-    pinMode(PWR_A, OUTPUT);
-    pinMode(PWR_B, OUTPUT);
-    pinMode(DIR_A, OUTPUT);
-    pinMode(DIR_B, OUTPUT);
-    delay(10);
-
-    log(String(("FINISHED in  ") + String(millis() - engineSETtime)) + String("s"));
+  if (LOG_LEVEL == INFO)  log(String(("FINISHED in  ") + String(millis() - engineSETtime)) + String("s"));
 }
