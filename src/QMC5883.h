@@ -2,28 +2,31 @@ QMC5883LCompass compass;
 
 void compassSET()
 {
-    if (LOG_LEVEL == INFO)  log(String("compassSET_START"));
+    String LEVEL = INFO;
+    if(LOG_LEVEL == LEVEL)  log(String("compassSET_START"));
     
     unsigned long compassSET = millis();
     
     compass.init();
     delay(100);
 
-    if (LOG_LEVEL == INFO)  log(String("FINISHED in ") + String(millis() - compassSET) + String("s"));
+    if(LOG_LEVEL == LEVEL)  log(String("FINISHED in ") + String(millis() - compassSET) + String("s"));
 }
 
 
 int compassReadFast()
 {
+    String LEVEL = VERBOSE;
     compass.read();
     unsigned int Azimuth = compass.getAzimuth();
 
-    if (LOG_LEVEL == VERBOSE)  log(String("compassREAD ") + String(Azimuth));
+    if(LOG_LEVEL == LEVEL)  log(String("compassREAD ") + String(Azimuth));
     return Azimuth;
 }
 
 int compassReadMedia()
 {
+    String LEVEL = VERBOSE;
     compass.read();
     int deg_media = 0;
     int i = 0;
@@ -35,12 +38,13 @@ int compassReadMedia()
     }
     deg_media = deg_media/i;
 
-    if (LOG_LEVEL == VERBOSE)  log(String("compassREAD ") + String(deg_media));
+    if(LOG_LEVEL == LEVEL)  log(String("compassREAD ") + String(deg_media));
     return deg_media;
 }
 
 int compassDeg (int deg_set, int deg, String direction)
 {
+    String LEVEL = VERBOSE;
     int deg_final;
     int deg_diff;
   
@@ -55,13 +59,14 @@ int compassDeg (int deg_set, int deg, String direction)
 
     delay(10);
 
-    if(LOG_LEVEL == VERBOSE)    log(String("DEG_DIFF: ") + String(deg_diff));
+    if(LOG_LEVEL == LEVEL)    log(String("DEG_DIFF: ") + String(deg_diff));
     
     return deg_diff;
 }
 
 void compassDegDelay(int deg, String direction)
 {
+    String LEVEL = DEBUG;
     int deg_set = compassReadMedia();
     int deg_cd = deg; //deg_cd = degrees countdown
     deg_threshold = 0 - deg;
@@ -69,7 +74,7 @@ void compassDegDelay(int deg, String direction)
     while ((deg_cd > 0) || (deg_cd < deg_threshold)) 
     {
         deg_cd = compassDeg(deg_set, deg, direction);
-        if(LOG_LEVEL == DEBUG) log(String("DEG_CD: ") + String(deg_cd));
+        if(LOG_LEVEL == LEVEL) log(String("DEG_CD: ") + String(deg_cd));
     }
 
 }
