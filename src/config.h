@@ -8,6 +8,8 @@
 #define DIR_A   4
 #define DIR_B   12
 
+unsigned int enginePWR = 0;
+
 //QMC5883L
 
 unsigned int deg_threshold;
