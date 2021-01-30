@@ -22,7 +22,10 @@ void display_print(int row, String message) {
 
 void log(String message) 
 {
-    if(riga == 4)  riga = 0;
-    display_print(riga, message);
-    riga++;
+    if(StringIdentifier(message))
+    {
+        if(riga == 4)  riga = 0;
+        display_print(riga, message);
+        riga++;
+    }
 }

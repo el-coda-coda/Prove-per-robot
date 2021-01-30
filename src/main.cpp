@@ -3,8 +3,9 @@
 #include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
 #include <config.h>
+#include <Strings.h>
 #include <log.h>
-#include <motors.h>
+#include <engines.h>
 #include <QMC5883.h>
 #include <segments.h>
 
@@ -15,6 +16,10 @@ void setup()
   Serial.begin(115200); 
   engineSET();
   compassSET();
+
+
+  String prova = "engine on papapapa";
+  StringIdentifier(prova);
 }
 
 void loop() {
