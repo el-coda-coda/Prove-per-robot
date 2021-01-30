@@ -16,10 +16,6 @@ void setup()
   Serial.begin(115200); 
   engineSET();
   compassSET();
-
-
-  String prova = "engine on papapapa";
-  StringIdentifier(prova);
 }
 
 void loop() {
