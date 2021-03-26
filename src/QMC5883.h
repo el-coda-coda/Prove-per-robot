@@ -1,17 +1,18 @@
 QMC5883LCompass compass;
 
-void compassSET()
-{
+
+
+void compassSET()   {
     log(String("compassSET_START"));
     
     unsigned long compassSET = millis();
     compass.init();
+    compass.setSmoothing(10, true);
     delay(100);
 }
 
 
-int compassReadFast()
-{
+int compassReadFast()   {
     compass.read();
     unsigned int Azimuth = compass.getAzimuth();
 
@@ -19,28 +20,23 @@ int compassReadFast()
     return Azimuth;
 }
 
-int compassReadMedia()
-{
+int compassReadMedia(){
     compass.read();
     int deg_media = 0;
-    int i = 0;
 
-    while(i <= 10)
-    {
+    for(int i = 0; i < 10; i++){
         deg_media += compass.getAzimuth();
-        i++;
     }
-    deg_media = deg_media/i;
+    deg_media = deg_media/10;
 
     log(String("compassREAD ") + String(deg_media));
     return deg_media;
 }
 
-int compassDeg (int deg_set, int deg, String direction)
-{
+int compassDeg (int deg_set, int deg, String direction) {
     int deg_final;
     int deg_diff;
-  
+
     if (direction == RIGHT) deg_final = deg_set + deg;
     if (direction == LEFT)   deg_final = deg_set - deg;
 
@@ -57,16 +53,13 @@ int compassDeg (int deg_set, int deg, String direction)
     return deg_diff;
 }
 
-void compassDegDelay(int deg, String direction)
-{
+void compassDegDelay(int deg, String direction) {
     int deg_set = compassReadMedia();
     int deg_cd = deg; //deg_cd = degrees countdown
     deg_threshold = 0 - deg;
 
-    while ((deg_cd > 0) || (deg_cd < deg_threshold)) 
-    {
+    while ((deg_cd > 0) || (deg_cd < deg_threshold)) {
         deg_cd = compassDeg(deg_set, deg, direction);
         log(String("compassDEG_CD: ") + String(deg_cd));
     }
-
 }

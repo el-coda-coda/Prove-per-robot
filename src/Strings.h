@@ -1,10 +1,8 @@
-bool StringIdentifier(String message)
-{
+bool StringIdentifier(String message)   {
     bool identity = false;
 
     //VERBOSE - VERBOSE - VERBOSE - VERBOSE
-    if (LOG_LEVEL == VERBOSE)
-    {
+    if (LOG_LEVEL == VERBOSE)   {
         //engines
         if (message.startsWith("engineON", 0))  identity = true;
         if (message.startsWith("engineOFF", 0)) identity = true;
@@ -15,8 +13,7 @@ bool StringIdentifier(String message)
         if (message.startsWith("segmentCURVE", 0))   identity = true;
 
         //DEUG - DEBUG - DEBUG - DEBUG
-        if (LOG_LEVEL == DEBUG)
-        {
+        if (LOG_LEVEL == DEBUG) {
             //engines
             //---------
             //compass
@@ -24,8 +21,7 @@ bool StringIdentifier(String message)
             //segments
 
             //INFO - INFO - INFO - INFO
-            if (LOG_LEVEL == INFO)
-            {
+            if (LOG_LEVEL == INFO)  {
                 //engines
                 if (message.startsWith("engineSET", 0)) identity = true;
                 //compass
@@ -34,6 +30,5 @@ bool StringIdentifier(String message)
             }
         }
     }
-
     return identity;
 }

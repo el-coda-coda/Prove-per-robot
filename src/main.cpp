@@ -9,8 +9,7 @@
 #include <QMC5883.h>
 #include <segments.h>
 
-void setup() 
-{
+void setup() {
   LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
