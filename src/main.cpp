@@ -19,5 +19,6 @@ void setup() {
 
 void loop() {
   segmentCURVE(10, LEFT);
-  log()
+  log(String(compassReadMedia()));
+  delay(1000);
 }
