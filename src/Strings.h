@@ -1,34 +1,28 @@
+String infoArr[] = {"engineSET", "compassSET"};
+String debugArr[] = {"compassCD"};
+String verboseArr[] = {"engineON", "engineOFF", "compassREAD", "compassDEG_DIFF", "segmentCURVE"};
+
+//Remeber you have to update the length of the arrays if you want a precise count.
+
+
 bool StringIdentifier(String message)   {
-    bool identity = false;
-
-    //VERBOSE - VERBOSE - VERBOSE - VERBOSE
-    if (LOG_LEVEL == VERBOSE)   {
-        //engines
-        if (message.startsWith("engineON", 0))  identity = true;
-        if (message.startsWith("engineOFF", 0)) identity = true;
-        //compass
-        if (message.startsWith("compassREAD", 0))   identity = true;
-        if (message.startsWith("compassDEG_DIFF", 0))   identity = true;
-        //segments
-        if (message.startsWith("segmentCURVE", 0))   identity = true;
-
-        //DEUG - DEBUG - DEBUG - DEBUG
-        if (LOG_LEVEL == DEBUG) {
-            //engines
-            //---------
-            //compass
-            if (message.startsWith("compassCD", 0))   identity = true;
-            //segments
-
-            //INFO - INFO - INFO - INFO
-            if (LOG_LEVEL == INFO)  {
-                //engines
-                if (message.startsWith("engineSET", 0)) identity = true;
-                //compass
-                if (message.startsWith("compassSET", 0))    identity = true;
-                //segments
-            }
+    for (int i = 0; i < 5; i++) {
+        if (message == verboseArr[i]) {
+            if (LOG_LEVEL == VERBOSE)   return true;
+            else return false;
         }
     }
-    return identity;
+    for (int i = 0; i < 1; i++) {
+        if(message == debugArr[i]) {
+            if (LOG_LEVEL == DEBUG)   return true;
+            else return false; 
+        }
+    }
+    for (int i = 0; i < 2; i++) {
+        if(message == debugArr[i]) {
+            if (LOG_LEVEL == INFO)   return true;
+            else return false;
+        }
+    }
+    return true;
 }
