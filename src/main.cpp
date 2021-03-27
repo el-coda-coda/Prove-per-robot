@@ -18,5 +18,6 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  segmentCURVE(10, LEFT);
+  log()
 }
