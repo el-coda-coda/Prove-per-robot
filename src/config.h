@@ -7,6 +7,7 @@
 
 #define DIR_A   4
 #define DIR_B   12
+#define PANEL_PIN   7
 
 unsigned int enginePWR = 0;
 

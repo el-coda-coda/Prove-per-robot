@@ -1,8 +1,6 @@
 void engineON(int pwr, String direction)  {
   float pwr_control = pwr * 2.55;
 
-  log(String("engineON_") + String (direction));
-
   if (direction == STRAIGHT)  {
     analogWrite(PWR_A, pwr_control);
     analogWrite(PWR_B, pwr_control);
@@ -30,21 +28,20 @@ void engineON(int pwr, String direction)  {
     digitalWrite(DIR_A, LOW);
     digitalWrite(DIR_B, HIGH);
   }
-
+  write.verbose(String("engine_ON ") + direction);
 }
 
 void engineOFF()  {
-  log(String("engineOFF"));
+  write.verbose(String("engine_OFF "));
   engineON(0, STRAIGHT);
 }
 
 void engineSET()  { 
-  log(String("engineSET_START"));
   unsigned long engineSETtime = millis();
   pinMode(PWR_A, OUTPUT);
   pinMode(PWR_B, OUTPUT);
   pinMode(DIR_A, OUTPUT);
   pinMode(DIR_B, OUTPUT);
-  delay(10);
-  log(String("engineSET_COMPLETE"));
+  delay(100);
+  write.info(String("engineSET in ") + float (millis() - engineSETtime)/1000 + String(" s"));
 }

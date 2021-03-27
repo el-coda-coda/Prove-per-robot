@@ -19,13 +19,29 @@ void display_print(int row, String message) {
     lcd.print(message);
 }
 
-
-void log(String message) 
-{
-    if(StringIdentifier(message))
-    {
-        if(riga == 4)  riga = 0;
-        display_print(riga, message);
-        riga++;
-    }
+void type(String message) {
+    if(riga == 4)  riga = 0;
+    display_print(riga, message);
+    riga++;
 }
+
+class logging{
+    public:
+    void info(String message);
+    void debug(String message);
+    void verbose(String message);
+};
+
+void logging::info(String message){
+    if(LOG_LEVEL == INFO)   type(message);
+}
+
+void logging::debug(String message){
+    if(LOG_LEVEL == DEBUG)  type(message);
+}
+
+void logging::verbose(String message){
+    if(LOG_LEVEL == VERBOSE)    type(message);
+}
+
+logging write;
