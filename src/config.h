@@ -7,18 +7,24 @@
 
 #define DIR_A   4
 #define DIR_B   12
-#define PANEL_PIN   7
 
 unsigned int enginePWR = 0;
 
-//QMC5883L
+//SOLAR PANEL
+#define PANEL_PIN   7
 
+//BATTERY
+#define BAT_PIN  3
+#define BAT_MIN  9.0
+#define BAT_MAX 13.8
+#define BAT_SCALE   0.054
+
+//QMC5883L
 unsigned int deg_threshold;
 
 //COMUNICATION
 
 String dir;
-
 String LEFT = "LEFT";
 String RIGHT = "RIGHT";
 String STRAIGHT = "STRAIGHT";

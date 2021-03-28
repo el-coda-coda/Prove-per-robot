@@ -10,7 +10,7 @@
 #include <segments.h>
 
 void setup() {
-  pinMode(Panel_PIN, OUTPUT);
+  pinMode(PANEL_PIN, OUTPUT);
 
   LOG_LEVEL = INFO;
   Wire.begin();
