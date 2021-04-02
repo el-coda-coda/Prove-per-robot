@@ -34,3 +34,5 @@ String INFO = "INFO";
 String VERBOSE = "VERBOSE";
 String DEBUG = "DEBUG";
 String FLAT = "FLAT";
+bool LOG_SERIAL = true; // or OFF for don't log on the serial
+bool LOG_DISPLAY = true; // or OFF for don't log on the display

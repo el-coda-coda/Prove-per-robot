@@ -20,9 +20,14 @@ void display_print(int row, String message) {
 }
 
 void type(String message) {
-    if(riga == 4)  riga = 0;
-    display_print(riga, message);
-    riga++;
+    if(LOG_DISPLAY){
+        if(riga == 4)  riga = 0;
+        display_print(riga, message);
+        riga++;
+    }
+    if(LOG_SERIAL){
+        Serial.println(message);
+    }
 }
 
 class logging{

@@ -23,7 +23,6 @@ void setup() {
 }
 
 void loop() {
-  Serial.println("Still alive");
   write.info(String("DG: ") + String(sensor.compass()));
   delay(500);
 }
