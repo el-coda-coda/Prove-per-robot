@@ -20,7 +20,7 @@ unsigned int enginePWR = 0;
 #define BAT_SCALE   0.054
 
 //QMC5883L
-unsigned int deg_threshold;
+int deg_threshold;
 
 //COMUNICATION
 

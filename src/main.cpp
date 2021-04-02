@@ -11,18 +11,18 @@
 
 void setup() {
   pinMode(PANEL_PIN, OUTPUT);
-
   LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
   engineSET();
   compassSET();
+  write.info(String(sensor.battery()));
+
+  delay(5000);
 }
 
 void loop() {
-  engineON(255, LEFT);
-  write.info(String(compassReadFast()));
+  Serial.println("Still alive");
+  write.info(String("DG: " + compassReadFast()));
   delay(500);
-  engineOFF();
-  delay(2000);
 }

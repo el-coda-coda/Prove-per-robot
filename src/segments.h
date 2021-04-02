@@ -3,8 +3,6 @@ int segmentCURVE(int deg, String direction)
     engineON(enginePWR, direction);
     compassDegDelay(deg, direction);
     engineOFF();
-
-    //log(String("SegmentCURVE OFF"));
     return compassReadMedia();
 }
 
