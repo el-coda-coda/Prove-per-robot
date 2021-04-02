@@ -33,3 +33,4 @@ String LOG_LEVEL;
 String INFO = "INFO";
 String VERBOSE = "VERBOSE";
 String DEBUG = "DEBUG";
+String FLAT = "FLAT";

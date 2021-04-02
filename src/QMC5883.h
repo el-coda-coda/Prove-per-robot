@@ -1,26 +1,7 @@
-QMC5883LCompass compass;
-
-void compassSET()   {
-    unsigned long compassSET = millis();
-    compass.init();
-    compass.setSmoothing(10, true);
-    delay(100);
-    write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s"));
-}
-
-
-int compassReadFast()   {
-    compass.read();
-    unsigned int Azimuth = compass.getAzimuth();
-    write.verbose(String("DG: ") + Azimuth + String("°"));
-    return Azimuth;
-}
-
 int compassReadMedia(){
-    compass.read();
     int deg_media = 0;
     for(int i = 0; i < 10; i++){
-        deg_media += compass.getAzimuth();
+        deg_media += sensor.compass();
     }
     deg_media = deg_media/10;
     write.verbose(String("DG :") + deg_media + String("°"));
@@ -37,8 +18,8 @@ int compassDeg (int deg_set, int deg, String direction) {
     if (deg_final > 360)    deg_final -= 360;
     if (deg_final < 0)  deg_final += 360;
 
-    if (direction == RIGHT)   deg_diff = deg_final - compassReadFast();
-    if (direction == LEFT)    deg_diff = compassReadFast() - deg_final;
+    if (direction == RIGHT)   deg_diff = deg_final - sensor.compass();
+    if (direction == LEFT)    deg_diff = sensor.compass() - deg_final;
 
     delay(10);
 

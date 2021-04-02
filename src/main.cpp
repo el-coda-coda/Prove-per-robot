@@ -1,12 +1,13 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <EEPROM.h>
 #include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
 #include <config.h>
 #include <log.h>
 #include <sensors.h>
-#include <engines.h>
 #include <QMC5883.h>
+#include <engines.h>
 #include <segments.h>
 
 void setup() {
@@ -15,14 +16,14 @@ void setup() {
   Wire.begin();
   Serial.begin(115200); 
   engineSET();
-  compassSET();
-  write.info(String(sensor.battery()));
+  sensor.setCompass(FLAT);
+  write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(5000);
 }
 
 void loop() {
   Serial.println("Still alive");
-  write.info(String("DG: " + compassReadFast()));
+  write.info(String("DG: ") + String(sensor.compass()));
   delay(500);
 }
