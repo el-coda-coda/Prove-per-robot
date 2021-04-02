@@ -11,7 +11,9 @@
 #include <segments.h>
 
 void setup() {
+  pinMode(LED_SETUP, OUTPUT);
   pinMode(PANEL_PIN, OUTPUT);
+  digitalWrite(LED_SETUP, HIGH);
   LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
@@ -20,9 +22,10 @@ void setup() {
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(5000);
+  digitalWrite(LED_SETUP, LOW);
 }
 
 void loop() {
   write.info(String("DG: ") + String(sensor.compass()));
-  delay(500);
+  delay(200);
 }

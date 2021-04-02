@@ -19,6 +19,9 @@ unsigned int enginePWR = 0;
 #define BAT_MAX 13.8
 #define BAT_SCALE   0.054
 
+//SETUP LED PIN
+#define LED_SETUP   13
+
 //QMC5883L
 int deg_threshold;
 
