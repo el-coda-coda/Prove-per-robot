@@ -38,11 +38,11 @@ class logging{
 };
 
 void logging::info(String message){
-    if(LOG_LEVEL == INFO)   type(message);
+    if(LOG_LEVEL == INFO || LOG_LEVEL == DEBUG || LOG_LEVEL == VERBOSE)   type(message);
 }
 
 void logging::debug(String message){
-    if(LOG_LEVEL == DEBUG)  type(message);
+    if(LOG_LEVEL == DEBUG || LOG_LEVEL == VERBOSE)  type(message);
 }
 
 void logging::verbose(String message){

@@ -1,7 +1,7 @@
-int segmentCURVE(int deg, String direction)
+int segmentCURVE(int deg, String direction, int deg_set)
 {
     engineON(enginePWR, direction);
-    compassDegDelay(deg, direction);
+    cdDeg(compassReadMedia(), )
     engineOFF();
     return compassReadMedia();
 }
@@ -10,7 +10,7 @@ bool segmentDegSet()
 {
     String LEVEL = INFO;
     unsigned int setDeg = compassReadMedia();
-    int setDegRight = segmentCURVE(10, RIGHT);
+    int setDegRight = segmentCURVE(10, RIGHT, setDeg);
     bool segmentSituation;
 
     if ((setDegRight < setDeg) || (setDegRight > (setDeg + 180)))
@@ -23,7 +23,7 @@ bool segmentDegSet()
         //if(LOG_LEVEL == LEVEL)  log(String("A SINISTRA SONO DI MENO"));
         segmentSituation = false;
     }
-    segmentCURVE(10, LEFT);
+    segmentCURVE(10, LEFT, sensor.compass());
 
     return segmentSituation;
 }
