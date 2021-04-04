@@ -22,6 +22,7 @@ void setup() {
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(5000);
+  write.verbose(String("First compass: ") + compassReadMedia());
   digitalWrite(LED_SETUP, LOW);
 }
 

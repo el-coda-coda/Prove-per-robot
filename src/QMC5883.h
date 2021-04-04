@@ -1,6 +1,8 @@
+int deg_media = 0;
+int i = 0;
+
 int compassReadMedia(){
-    int deg_media = 0;
-    for(int i = 0; i < 15; i++){
+    for(i = 0; i < 15; i++){
         deg_media += sensor.compass();
         delay(1);
     }
