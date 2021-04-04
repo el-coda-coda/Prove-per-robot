@@ -14,7 +14,7 @@ void setup() {
   pinMode(LED_SETUP, OUTPUT);
   pinMode(PANEL_PIN, OUTPUT);
   digitalWrite(LED_SETUP, HIGH);
-  LOG_LEVEL = VERBOSE;
+  LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
   engineSET();
@@ -22,17 +22,18 @@ void setup() {
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(5000);
-  write.verbose(String("First compass: ") + compassReadMedia());
   digitalWrite(LED_SETUP, LOW);
 }
 
 void loop() {
-  write.info(String("Start turn"));
-  int deg_set = compassReadMedia();
-  bool he = true;
-  cdDeg(deg_set, LEFT, 90);
-  write.info(String("Turning finished"));
-  //write.info(String("DEG_DIFF: ") + compassDeg(compassReadMedia(), 90, LEFT));
-  
-  delay(5000);
+  if(Serial.available()){
+    String command = Serial.readString();
+    Serial.print(String(command));
+    if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
+    if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);
+    if (command.startsWith("-STRAIGTH")) engineON(100, STRAIGHT);
+    if (command.startsWith("-STOP")) engineOFF();
+    if (command.startsWith("-RIGHT 90"))  segmentCURVE(90, RIGHT, compassReadMedia());
+    if (command.startsWith("-LEFT 90"))  segmentCURVE(90, LEFT, compassReadMedia());
+  }
 }

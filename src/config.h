@@ -8,7 +8,7 @@
 #define DIR_A   4
 #define DIR_B   12
 
-unsigned int enginePWR = 0;
+unsigned int enginePWR = 50;
 
 //SOLAR PANEL
 #define PANEL_PIN   7

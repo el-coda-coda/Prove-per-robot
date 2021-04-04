@@ -27,6 +27,7 @@ bool sensors::setCompass(String slope){
         write.info(String("PLS say the slope"));
         return false;
     }
+    write.verbose(String("First compass: ") + compassReadMedia());
     write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s"));
     return true;
 }

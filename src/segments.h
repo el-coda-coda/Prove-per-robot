@@ -1,7 +1,7 @@
 int segmentCURVE(int deg, String direction, int deg_set)
 {
     engineON(enginePWR, direction);
-    cdDeg(compassReadMedia(), )
+    cdDeg(deg_set, direction, deg);
     engineOFF();
     return compassReadMedia();
 }
