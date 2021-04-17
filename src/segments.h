@@ -27,3 +27,7 @@ bool segmentDegSet()
 
     return segmentSituation;
 }
+
+void segmentStraight (){
+    
+}

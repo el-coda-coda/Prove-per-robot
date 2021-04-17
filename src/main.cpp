@@ -7,6 +7,7 @@
 #include <log.h>
 #include <sensors.h>
 #include <QMC5883.h>
+#include <calculates.h>
 #include <engines.h>
 #include <segments.h>
 
