@@ -33,7 +33,7 @@ void loop() {
     Serial.print(String(command));
     if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
     if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);
-    if (command.startsWith("-STRAIGTH")) engineON(100, STRAIGHT);
+    if (command.startsWith("-STRAIGHT")) engineON(100, STRAIGHT);
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-RIGHT 90"))  segmentCURVE(90, RIGHT, compassReadMedia());
     if (command.startsWith("-LEFT 90"))  segmentCURVE(90, LEFT, compassReadMedia());

@@ -1,3 +1,8 @@
+void engineOFF()  {
+  write.verbose(String("engine_OFF "));
+  engineON(0, STRAIGHT);
+}
+
 void engineON(int pwr, String direction)  {
   float pwr_control = pwr * 2.55;
 
@@ -31,9 +36,29 @@ void engineON(int pwr, String direction)  {
   write.verbose(String("engine_ON ") + direction);
 }
 
-void engineOFF()  {
-  write.verbose(String("engine_OFF "));
-  engineON(0, STRAIGHT);
+void engineDIR(int pwA, int pwB)  {
+
+  if (pwA < 0)  {
+    analogWrite(PWR_A, -pwA);
+    digitalWrite(DIR_A, LOW);
+  }
+  else
+  {
+    analogWrite(PWR_A, pwA);
+    analogWrite(DIR_A, HIGH);
+  }
+
+  if (pwB > 0)  {
+    analogWrite(PWR_A, -pwB);
+    digitalWrite(DIR_A, LOW);
+  }
+  else
+  {
+    analogWrite(PWR_A, pwB);
+    analogWrite(DIR_A, HIGH);
+  }
+
+  write.verbose(String("engineDIR ") + String(pwA) + String(" ") + String(pwB));
 }
 
 void engineSET()  { 

@@ -8,6 +8,9 @@
 #define DIR_A   4
 #define DIR_B   12
 
+#define WHEEL_DIAM  12 //in centimeters
+#define ROTATION_SPEED  0.42 // 25 RPM, 0.4167 rotztion for second
+
 unsigned int enginePWR = 75;
 
 //SOLAR PANEL

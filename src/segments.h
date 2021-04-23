@@ -28,6 +28,22 @@ bool segmentDegSet()
     return segmentSituation;
 }
 
-void segmentStraight (){
-    
+void segmentStraight(String direction, int distance){
+    int set_time = millis();
+    int degSet = compassReadMedia();
+    engineON(enginePWR, STRAIGHT);
+    while(millis() - set_time <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
+        while(compassStraight(degSet).startsWith("RIGHT")){
+            int i = 0;
+            engineDIR(255, 255 - i);
+            delay(10);
+        }  
+        while(compassStraight(degSet).startsWith("LEFT")){
+            int i = 0;
+            engineDIR(255 - i, 255);
+            delay(10);
+        }
+        engineON(enginePWR, STRAIGHT);
+    }
+
 }
