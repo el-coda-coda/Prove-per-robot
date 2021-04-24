@@ -1,8 +1,3 @@
-void engineOFF()  {
-  write.verbose(String("engine_OFF "));
-  engineON(0, STRAIGHT);
-}
-
 void engineON(int pwr, String direction)  {
   float pwr_control = pwr * 2.55;
 
@@ -34,6 +29,11 @@ void engineON(int pwr, String direction)  {
     digitalWrite(DIR_B, HIGH);
   }
   write.verbose(String("engine_ON ") + direction);
+}
+
+void engineOFF()  {
+  write.verbose(String("engine_OFF "));
+  engineON(0, STRAIGHT);
 }
 
 void engineDIR(int pwA, int pwB)  {

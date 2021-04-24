@@ -28,22 +28,36 @@ bool segmentDegSet()
     return segmentSituation;
 }
 
-void segmentStraight(String direction, int distance){
+void segmentStraight(String direction, int distance){ // distance in BOH
+    digitalWrite(LED_SETUP, HIGH);
     int set_time = millis();
     int degSet = compassReadMedia();
-    engineON(enginePWR, STRAIGHT);
+    delay(50);
+    engineON(50, STRAIGHT);
+    write.info("STARTED STRAIGHT");
+    write.info(String(calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)) + String(" ms"));
+    write.info(String(millis()) + String(" ms"));
     while(millis() - set_time <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
+        write.info("IN THE WHILE");
+        write.info(String("COMPASS: ") + compassStraight(degSet));
         while(compassStraight(degSet).startsWith("RIGHT")){
             int i = 0;
             engineDIR(255, 255 - i);
-            delay(10);
+            delay(50);
+            i++; 
         }  
         while(compassStraight(degSet).startsWith("LEFT")){
             int i = 0;
             engineDIR(255 - i, 255);
-            delay(10);
+            delay(50);
+            i++;
         }
         engineON(enginePWR, STRAIGHT);
+        String command = Serial.readString();
+        if (command.startsWith("-STOP")) break;
     }
-
+    write.info("FINISHED WHILE");
+    write.info(String("STRAIGHT FINISHED IN ") + String(millis() - set_time) + String(" ms"));
+    engineOFF();
+    digitalWrite(LED_SETUP, LOW);
 }
