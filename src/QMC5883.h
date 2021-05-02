@@ -2,12 +2,12 @@ int deg_media = 0;
 int i = 0;
 
 int compassReadMedia(){
-    for(i = 0; i < 15; i++){
+    for(i = 0; i < 50; i++){
         deg_media += sensor.compass();
-        delay(1);
+        delay(2);
     }
-    deg_media = deg_media/15;
-    write.verbose(String("DG :") + deg_media + String("°"));
+    deg_media = deg_media/50;
+    write.verbose(String("DEG :") + deg_media + String("°"));
     return deg_media;
 }
 
@@ -80,8 +80,11 @@ bool cdDeg (int deg_set, String direction, int deg){
 }
 
 String compassStraight (int deg_set){
-    String result;
+    String result = "OK";
     int deg = compassReadMedia(); //deg is the live deg from the compass
+    long timeSet = millis();
+    write.info(String("DEG: ") + String(deg));
+    write.info(String("DEG SET: ") + String(deg_set));
     int deg_diff = 0;
     if (deg_set > deg){
         result = "RIGHT";
@@ -102,5 +105,69 @@ String compassStraight (int deg_set){
         result = "LEFT";
         deg_diff = 360 - deg + deg_set;
     }
+    write.info(String("C_STRAIGHT FINISHED IN ") + String(millis() - timeSet) + String(" ms"));
     return String(result + " " + String(deg_diff));
+}
+
+int compassCalibration(){
+
+    int calibrationData[3][2];
+    bool changed = false;
+    bool done = false;
+    int t = 0;
+    int c = 0;
+    int x, y, z;
+  
+    // Read compass values
+    qmc.read();
+
+    // Return XYZ readings
+    x = qmc.getX();
+    y = qmc.getY();
+    z = qmc.getZ();
+
+    changed = false;
+
+    if(x < calibrationData[0][0]) {
+        calibrationData[0][0] = x;
+        changed = true;
+    }
+    if(x > calibrationData[0][1]) {
+        calibrationData[0][1] = x;
+        changed = true;
+    }
+
+    if(y < calibrationData[1][0]) {
+        calibrationData[1][0] = y;
+        changed = true;
+    }
+    if(y > calibrationData[1][1]) {
+        calibrationData[1][1] = y;
+        changed = true;
+    }
+
+    if(z < calibrationData[2][0]) {
+        calibrationData[2][0] = z;
+        changed = true;
+    }
+    if(z > calibrationData[2][1]) {
+        calibrationData[2][1] = z;
+        changed = true;
+    }
+
+    if (changed && !done) {
+        engineON(100, RIGHT);
+        c = millis();
+    }
+        t = millis();
+    
+    
+    if ( (t - c > 5000) && !done) {
+        done = true;
+        write.info("DONE");
+        write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
+        }
+    engineOFF();
+    int calibrationArray[6] {calibrationData[0][0], calibrationData[0][1], calibrationData[1][0], calibrationData[1][1], calibrationData[2][0], calibrationData[2][1]};
+    return calibrationArray[6];
 }

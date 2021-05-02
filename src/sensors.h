@@ -33,7 +33,12 @@ bool sensors::setCompass(String slope){
 
 int sensors::compass(){
     qmc.read();
-    unsigned int deg = qmc.getAzimuth();
+    unsigned int deg = 0;
+    for (int i = 0; i < 5; i ++){
+        deg += qmc.getAzimuth();
+        delay(3);
+    }
+    deg /= 5;
     write.verbose(String("DG: ") + deg + String("°"));
     return deg;
 }

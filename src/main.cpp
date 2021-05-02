@@ -6,9 +6,9 @@
 #include <config.h>
 #include <log.h>
 #include <sensors.h>
+#include <engines.h>
 #include <QMC5883.h>
 #include <calculates.h>
-#include <engines.h>
 #include <segments.h>
 
 void setup() {
@@ -22,7 +22,7 @@ void setup() {
   sensor.setCompass(FLAT);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
-  delay(5000);
+  delay(2000);
   write.verbose(String("First compass: ") + compassReadMedia());
   digitalWrite(LED_SETUP, LOW);
 }
@@ -33,10 +33,22 @@ void loop() {
     Serial.print(String(command));
     if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
     if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);
-    if (command.startsWith("-STRAIGHT")) segmentStraight(STRAIGHT, 15);
+    if (command.startsWith("-STRAIGHT")){
+       int x = (command.substring(9).toInt());
+       segmentStraight(STRAIGHT, x);
+    }
+    if (command.startsWith("-RIGHT")){
+     int x = (command.substring(6).toInt());
+     Serial.print(String(command.substring(6)));
+     segmentCURVE(x, RIGHT, compassReadMedia());
+    }
+    if (command.startsWith("-LEFT")){
+     int x = (command.substring(5).toInt());
+     Serial.print(String(command.substring(5)));
+     segmentCURVE(x, LEFT, compassReadMedia());
+    }
     if (command.startsWith("-STOP")) engineOFF();
-    if (command.startsWith("-RIGHT 90"))  segmentCURVE(90, RIGHT, compassReadMedia());
-    if (command.startsWith("-LEFT 90"))  segmentCURVE(90, LEFT, compassReadMedia());
     if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);
+    if (command.startsWith("-CALIBRATION")) write.info(String(compassCalibration()));
   }
 }
