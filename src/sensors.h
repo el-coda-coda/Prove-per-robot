@@ -22,13 +22,17 @@ bool sensors::setCompass(String slope){
     qmc.init();
     qmc.setSmoothing(10, true);
     delay(50);
+    write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s") + String(" ") + slope);
+    if(slope == "FLAT"){
+        qmc.setCalibration(-468, 877, 0, 1523, -787, 0);
+        return true;
+    } 
     if(slope == "FLAT") qmc.setCalibration(-468, 877, 0, 1523, -787, 0);
+    if(slope == "CUSTOM") return true;
     else{
         write.info(String("PLS say the slope"));
         return false;
     }
-    write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s"));
-    return true;
 }
 
 int sensors::compass(){

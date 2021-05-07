@@ -110,64 +110,66 @@ String compassStraight (int deg_set){
 }
 
 int compassCalibration(){
-
+    engineON(50, RIGHT);
     int calibrationData[3][2];
     bool changed = false;
     bool done = false;
+    String command = "";
     int t = 0;
     int c = 0;
     int x, y, z;
-  
-    // Read compass values
-    qmc.read();
 
-    // Return XYZ readings
-    x = qmc.getX();
-    y = qmc.getY();
-    z = qmc.getZ();
+    while (String(command) != String("-STOP")) {
+        command = Serial.readString();
+        Serial.print(String(command)); 
+        // Read compass values
+        qmc.read();
 
-    changed = false;
-
-    if(x < calibrationData[0][0]) {
-        calibrationData[0][0] = x;
-        changed = true;
-    }
-    if(x > calibrationData[0][1]) {
-        calibrationData[0][1] = x;
-        changed = true;
-    }
-
-    if(y < calibrationData[1][0]) {
-        calibrationData[1][0] = y;
-        changed = true;
-    }
-    if(y > calibrationData[1][1]) {
-        calibrationData[1][1] = y;
-        changed = true;
-    }
-
-    if(z < calibrationData[2][0]) {
-        calibrationData[2][0] = z;
-        changed = true;
-    }
-    if(z > calibrationData[2][1]) {
-        calibrationData[2][1] = z;
-        changed = true;
-    }
-
-    if (changed && !done) {
-        engineON(100, RIGHT);
-        c = millis();
-    }
-        t = millis();
-    
-    
-    if ( (t - c > 5000) && !done) {
-        done = true;
-        write.info("DONE");
-        write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
+        // Return XYZ readings
+        x = qmc.getX();
+        y = qmc.getY();
+        z = qmc.getZ();
+        if(x < calibrationData[0][0]) {
+            calibrationData[0][0] = x;
+            changed = true;
         }
+        if(x > calibrationData[0][1]) {
+            calibrationData[0][1] = x;
+            changed = true;
+        }
+
+        if(y < calibrationData[1][0]) {
+            calibrationData[1][0] = y;
+            changed = true;
+        }
+        if(y > calibrationData[1][1]) {
+            calibrationData[1][1] = y;
+            changed = true;
+        }
+
+        if(z < calibrationData[2][0]) {
+            calibrationData[2][0] = z;
+            changed = true;
+        }
+        if(z > calibrationData[2][1]) {
+            calibrationData[2][1] = z;
+            changed = true;
+        }
+
+        if (changed && !done) {
+            c = millis();
+        }
+        t = millis();
+
+        if((t - c > 5000) && !done){
+            done = true;
+            break;
+        }
+        write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
+    }
+    write.info("DONE");
     engineOFF();
+    write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
     int calibrationArray[6] {calibrationData[0][0], calibrationData[0][1], calibrationData[1][0], calibrationData[1][1], calibrationData[2][0], calibrationData[2][1]};
     return calibrationArray[6];
 }

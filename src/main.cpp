@@ -19,12 +19,90 @@ void setup() {
   Wire.begin();
   Serial.begin(115200); 
   engineSET();
-  sensor.setCompass(FLAT);
+  sensor.setCompass(CUSTOM);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);
   write.verbose(String("First compass: ") + compassReadMedia());
   digitalWrite(LED_SETUP, LOW);
+}
+
+String qmcCalibration() {
+  int calibrationData[3][2];
+  bool changed = false;
+  bool done = false;
+  int t = 0;
+  int c = 0;
+
+  while (true){
+    int x, y, z;
+  
+  // Read compass values
+  qmc.read();
+
+  // Return XYZ readings
+  x = qmc.getX();
+  y = qmc.getY();
+  z = qmc.getZ();
+
+  changed = false;
+
+  if(x < calibrationData[0][0]) {
+    calibrationData[0][0] = x;
+    changed = true;
+  }
+  if(x > calibrationData[0][1]) {
+    calibrationData[0][1] = x;
+    changed = true;
+  }
+
+  if(y < calibrationData[1][0]) {
+    calibrationData[1][0] = y;
+    changed = true;
+  }
+  if(y > calibrationData[1][1]) {
+    calibrationData[1][1] = y;
+    changed = true;
+  }
+
+  if(z < calibrationData[2][0]) {
+    calibrationData[2][0] = z;
+    changed = true;
+  }
+  if(z > calibrationData[2][1]) {
+    calibrationData[2][1] = z;
+    changed = true;
+  }
+
+  if (changed && !done) {
+    Serial.println("CALIBRATING... Keep moving your sensor around.");
+    c = millis();
+  }
+    t = millis();
+  
+  
+  if ( (t - c > 5000) && !done) {
+    done = true;
+    Serial.println("DONE. Copy the line below and paste it into your projects sketch.);");
+    Serial.println();
+      
+    Serial.print("compass.setCalibration(");
+    Serial.print(calibrationData[0][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[0][1]);
+    Serial.print(", ");
+    Serial.print(calibrationData[1][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[1][1]);
+    Serial.print(", ");
+    Serial.print(calibrationData[2][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[2][1]);
+    Serial.println(");");
+    qmc.setCalibration(calibrationData[0][0], calibrationData[0][1], calibrationData[1][0], calibrationData[1][1], calibrationData[2][0], calibrationData[2][1]);
+    return String(calibrationData[0][0] + String(" ") + calibrationData[0][1] + String(" ") + calibrationData[1][0] + String(" ") + calibrationData[1][1] + String(" ") + calibrationData[2][0] + String(" ") + calibrationData[2][1]);
+    }
+  }
 }
 
 void loop() {
@@ -49,6 +127,10 @@ void loop() {
     }
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);
-    if (command.startsWith("-CALIBRATION")) write.info(String(compassCalibration()));
+    if (command.startsWith("-CALIBRATION")){
+      engineON(50, RIGHT);
+      qmcCalibration();
+      engineOFF();
+    }
   }
 }
