@@ -13,6 +13,11 @@
 
 unsigned int enginePWR = 75;
 
+#define CUTTER_PIN  8
+#define CUT_ENABLED  true
+#define CUT_OFF 1000
+#define CUT_ON  2000
+
 //SOLAR PANEL
 #define PANEL_PIN   7
 

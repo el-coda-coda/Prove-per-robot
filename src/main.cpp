@@ -11,6 +11,7 @@
 #include <QMC5883.h>
 #include <calculates.h>
 #include <segments.h>
+#include <cutting.h>
 
 void setup() {
   pinMode(LED_SETUP, OUTPUT);
@@ -21,6 +22,7 @@ void setup() {
   Serial.begin(115200); 
   engineSET();
   sensor.setCompass(CUSTOM);
+  cutter.attach(CUTTER_PIN);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);
