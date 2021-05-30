@@ -22,7 +22,7 @@ void setup() {
   Serial.begin(115200); 
   engineSET();
   sensor.setCompass(CUSTOM);
-  cutter.attach(CUTTER_PIN);
+  esc.attach(CUTTER_PIN);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);

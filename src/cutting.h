@@ -1,4 +1,4 @@
-Servo cutter;
+Servo esc;
 class cut {
     public:
     void off ();
@@ -7,13 +7,13 @@ class cut {
 };
 
 void cut::off() {
-    if(CUT_ENABLED) cutter.writeMicroseconds(CUT_OFF);
+    if(CUT_ENABLED) esc.writeMicroseconds(CUT_OFF);
     else write.info(String("Cutting not enabled"));
 }
 
 void cut::on (int speed) {
     int cut_speed = map(speed, 0, 100, CUT_OFF, CUT_ON);
-    if(CUT_ENABLED) cutter.writeMicroseconds(cut_speed);
+    if(CUT_ENABLED) esc.writeMicroseconds(cut_speed);
     else write.info(String("Cutting not enabled"));
 }
 
@@ -27,3 +27,5 @@ void cut::setup (){
         cutter.writeMicroseconds(CUT_OFF);
     }
 }
+
+cut cutter;
