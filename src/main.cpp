@@ -1,5 +1,6 @@
 #include <Arduino.h>
 #include <Wire.h>
+#include <Servo.h>
 #include <EEPROM.h>
 #include <QMC5883LCompass.h>
 #include <LiquidCrystal_I2C.h>
