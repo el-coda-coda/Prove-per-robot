@@ -109,67 +109,80 @@ String compassStraight (int deg_set){
     return String(result + " " + String(deg_diff));
 }
 
-int compassCalibration(){
-    engineON(50, RIGHT);
-    int calibrationData[3][2];
-    bool changed = false;
-    bool done = false;
-    String command = "";
-    int t = 0;
-    int c = 0;
+String qmcCalibration() {
+  int calibrationData[3][2];
+  bool changed = false;
+  bool done = false;
+  int t = 0;
+  int c = 0;
+
+  while (true){
     int x, y, z;
+  
+  // Read compass values
+  qmc.read();
 
-    while (String(command) != String("-STOP")) {
-        command = Serial.readString();
-        Serial.print(String(command)); 
-        // Read compass values
-        qmc.read();
+  // Return XYZ readings
+  x = qmc.getX();
+  y = qmc.getY();
+  z = qmc.getZ();
 
-        // Return XYZ readings
-        x = qmc.getX();
-        y = qmc.getY();
-        z = qmc.getZ();
-        if(x < calibrationData[0][0]) {
-            calibrationData[0][0] = x;
-            changed = true;
-        }
-        if(x > calibrationData[0][1]) {
-            calibrationData[0][1] = x;
-            changed = true;
-        }
+  changed = false;
 
-        if(y < calibrationData[1][0]) {
-            calibrationData[1][0] = y;
-            changed = true;
-        }
-        if(y > calibrationData[1][1]) {
-            calibrationData[1][1] = y;
-            changed = true;
-        }
+  if(x < calibrationData[0][0]) {
+    calibrationData[0][0] = x;
+    changed = true;
+  }
+  if(x > calibrationData[0][1]) {
+    calibrationData[0][1] = x;
+    changed = true;
+  }
 
-        if(z < calibrationData[2][0]) {
-            calibrationData[2][0] = z;
-            changed = true;
-        }
-        if(z > calibrationData[2][1]) {
-            calibrationData[2][1] = z;
-            changed = true;
-        }
+  if(y < calibrationData[1][0]) {
+    calibrationData[1][0] = y;
+    changed = true;
+  }
+  if(y > calibrationData[1][1]) {
+    calibrationData[1][1] = y;
+    changed = true;
+  }
 
-        if (changed && !done) {
-            c = millis();
-        }
-        t = millis();
+  if(z < calibrationData[2][0]) {
+    calibrationData[2][0] = z;
+    changed = true;
+  }
+  if(z > calibrationData[2][1]) {
+    calibrationData[2][1] = z;
+    changed = true;
+  }
 
-        if((t - c > 5000) && !done){
-            done = true;
-            break;
-        }
-        write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
+  if (changed && !done) {
+    Serial.println("CALIBRATING... Keep moving your sensor around.");
+    c = millis();
+  }
+    t = millis();
+  
+  
+  if ( (t - c > 5000) && !done) {
+    done = true;
+    Serial.println("DONE. Copy the line below and paste it into your projects sketch.);");
+    Serial.println();
+      
+    Serial.print("compass.setCalibration(");
+    Serial.print(calibrationData[0][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[0][1]);
+    Serial.print(", ");
+    Serial.print(calibrationData[1][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[1][1]);
+    Serial.print(", ");
+    Serial.print(calibrationData[2][0]);
+    Serial.print(", ");
+    Serial.print(calibrationData[2][1]);
+    Serial.println(");");
+    qmc.setCalibration(calibrationData[0][0], calibrationData[0][1], calibrationData[1][0], calibrationData[1][1], calibrationData[2][0], calibrationData[2][1]);
+    return String(calibrationData[0][0] + String(" ") + calibrationData[0][1] + String(" ") + calibrationData[1][0] + String(" ") + calibrationData[1][1] + String(" ") + calibrationData[2][0] + String(" ") + calibrationData[2][1]);
     }
-    write.info("DONE");
-    engineOFF();
-    write.info(String(calibrationData[0][0] + calibrationData[0][1] +calibrationData[1][0] + calibrationData[1][1] + calibrationData[2][0] + calibrationData[2][1]));
-    int calibrationArray[6] {calibrationData[0][0], calibrationData[0][1], calibrationData[1][0], calibrationData[1][1], calibrationData[2][0], calibrationData[2][1]};
-    return calibrationArray[6];
+  }
 }
