@@ -12,7 +12,7 @@ void cut::off() {
 }
 
 void cut::on (int speed) {
-    int cut_speed = map(speed, 0, 100, 1000, 2000);
+    int cut_speed = map(speed, 0, 100, CUT_OFF, CUT_ON);
     if(CUT_ENABLED) cutter.writeMicroseconds(cut_speed);
     else write.info(String("Cutting not enabled"));
 }
