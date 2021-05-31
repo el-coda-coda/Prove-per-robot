@@ -14,9 +14,13 @@
 unsigned int enginePWR = 75;
 
 #define CUTTER_PIN  8
+#define CUTTER_AMP_PIN  1 //the analog pin where read the consumption of the motor for cutting
 #define CUT_ENABLED  true
 #define CUT_OFF 1000
 #define CUT_ON  2000
+
+int cutterOffset = 0;
+float cutterScale = 0.185;  //motor cut current scale V/A
 
 //SOLAR PANEL
 #define PANEL_PIN   7
