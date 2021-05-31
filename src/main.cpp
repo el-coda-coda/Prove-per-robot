@@ -64,5 +64,7 @@ void loop() {
       Serial.print(String(command.substring(7)));
       cutter.on(x);
     }
+
+    if (command.startsWith("-CUT OPEN")) esc.writeMicroseconds(2000);
   }
 }

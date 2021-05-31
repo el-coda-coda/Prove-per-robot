@@ -21,6 +21,7 @@ unsigned int enginePWR = 75;
 
 int cutterOffset = 0;
 float cutterScale = 0.185;  //motor cut current scale V/A
+float cutterInputScale = 0.88;
 
 //SOLAR PANEL
 #define PANEL_PIN   7

@@ -12,7 +12,7 @@ void cut::off() { //motor cut stops
 }
 
 void cut::on (int speed) { //motor cut rotate from MIN to MAX
-    int cut_speed = map(speed, 0, 100, CUT_OFF, CUT_ON);
+    int cut_speed = map((speed * cutterInputScale), 0, 100, CUT_OFF, CUT_ON);
     if(CUT_ENABLED) esc.writeMicroseconds(cut_speed);
     else write.info(String("Cutting is not enabled"));
 }
