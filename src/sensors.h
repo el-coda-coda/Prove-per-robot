@@ -61,7 +61,7 @@ float sensors::cutter()  {
     int cutterPower = float(analogRead(CUTTER_AMP_PIN)) - cutterOffset;
     cutterPower = (cutterPower * 5.0/1023.0)/cutterScale;
     cutterPower  = constrain(cutterPower, 0, 5.0);
-    write.debug(String("Cutter cutter absorbed: ") + String(cutterPower));
+    write.debug(String("Cutter current absorbed: ") + String(cutterPower));
     write.verbose(String("Cutter power check in: ") + String(timeSet - millis()) + String("s"));
     return cutterPower;
 }
