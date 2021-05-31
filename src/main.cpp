@@ -23,6 +23,7 @@ void setup() {
   engineSET();
   sensor.setCompass(CUSTOM);
   esc.attach(CUTTER_PIN);
+  cutter.setup();
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);
@@ -56,6 +57,12 @@ void loop() {
       engineON(50, RIGHT);
       qmcCalibration();
       engineOFF();
+    }
+    if (command.startsWith("-CUT OFF")) cutter.off();
+    if (command.startsWith("-CUT ON")){
+      int x = (command.substring(7).toInt());
+      Serial.print(String(command.substring(7)));
+      cutter.on(x);
     }
   }
 }
