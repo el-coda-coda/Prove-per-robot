@@ -12,71 +12,56 @@ int compassReadMedia(){
 }
 
 bool cdDeg (int deg_set, String direction, int deg){
-    if (direction == LEFT){
-        int deg_in = deg_set;
-        int deg_final = deg_set - deg;
-        int deg_diff_part = 0; // = deg_final - 360; // con questo prendo quanto sotto zero va la deg diff
-        if(deg_final < 0)    deg_final += 360;
-        if(deg_in < deg_final){
-            deg_diff_part = deg - deg_set;
-            deg_final = 0;
-            deg_in += deg_diff_part;
-        }
+	int deg_diff;
+	int deg_fin;
 
-        write.debug(String("---COMPASS---"));
-        write.debug(String("SET: ") + String(deg_set));
-        write.debug(String("DIR: " + direction));
-        write.debug(String("DEG: ") + String(deg));
-        write.debug(String("DEG_IN: ") + String(deg_in));
-        write.debug(String("DEG_FIN: ") + String(deg_final));
-        write.verbose(String("DEG_PART: ") + String(deg_diff_part));
-        write.verbose(String("DEG_DIFF: ") + String(deg_final-deg_in));
+	if ((direction != LEFT) && (direction != RIGHT)){
+		write.info("INVALID DIRECTION: " + String(direction));
+		return false;
+	}
 
-        while((deg_in > deg_final) && ((deg_final-deg_in) > - 300)){
-            deg_in = compassReadMedia() + deg_diff_part;
-            if(deg_in > 360) deg_in -= 360;
-            write.verbose(String("DEG_IN: ") + String(deg_in));
-            write.verbose(String("DEG_FIN: ") + String(deg_final));
-            delay(5);
-        }
-        write.debug(String("-------------"));
-        return  true;
-    }
+	write.debug(String("---COMPASS---"));
+    write.debug(String("SET: ") + String(deg_set));
+    write.debug(String("DIR: " + direction));
+    write.debug(String("DEG: ") + String(deg));
 
-    if (direction == RIGHT){
-        int deg_in = deg_set;
-        int deg_final = deg_set + deg;
-        int deg_diff_part = 0; // = deg_final - 360; // con questo prendo quanto sotto zero va la deg diff
-        if(deg_final >= 360)    deg_final -= 360;
-        if(deg_in > deg_final){
-            deg_diff_part = 360 - deg_set;
-            deg_final = deg;
-            deg_in += deg_diff_part;
-        }
-        if(deg_in >= 360) deg_in -= 360;
+	if(direction == LEFT){
+		deg_diff = deg_set - deg;
 
-        write.debug(String("---COMPASS---"));
-        write.debug(String("SET: ") + String(deg_set));
-        write.debug(String("DIR: " + direction));
-        write.debug(String("DEG: ") + String(deg));
-        write.debug(String("DEG_IN: ") + String(deg_in));
-        write.debug(String("DEG_FIN: ") + String(deg_final));
-        write.verbose(String("DEG_PART: ") + String(deg_diff_part));
-        write.verbose(String("DEG_DIFF: ") + String(deg_final-deg_in));
+		if(deg_diff < 0){
+			while ((compassReadMedia() - deg_diff) > 0){
+				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
+				delay(10);
+			}
+		}
+		if(deg_diff >= 0){
+			deg_fin = deg_set - deg;
+			while (compassReadMedia() > deg_fin){
+				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
+				delay(10);
+			}
+		}
+	}
 
-        while((deg_in < deg_final)){
-            deg_in = compassReadMedia() + deg_diff_part;
-            if(deg_in >= 360) deg_in -= 360;
-            write.verbose(String("DEG_PART: ") + String(deg_diff_part));
-            write.verbose(String("DEG_DIFF: ") + String(deg_final-deg_in));
-            delay(5);
-        }
-        write.debug(String("-------------"));
-        return  true;
-    }
+	if(direction == RIGHT){
+		deg_diff = 360 - (deg_set + deg);
 
-    write.info("INVALID DIRECTION: " + String(direction));
-    return false;
+		if(deg_diff < 0){
+			while ((compassReadMedia() + deg_diff) < 360){
+				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
+				delay(10);
+			}
+		}
+		if(deg_diff >= 0){
+			deg_fin = deg_set + deg;
+			while(compassReadMedia() < deg_fin){
+				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
+				delay(10);
+			}
+		}
+	}
+	write.debug(String("-------------"));
+	return true;
 }
 
 String compassStraight (int deg_set){
@@ -165,10 +150,8 @@ String qmcCalibration() {
   
   if ( (t - c > 5000) && !done) {
     done = true;
-    Serial.println("DONE. Copy the line below and paste it into your projects sketch.);");
-    Serial.println();
       
-    Serial.print("compass.setCalibration(");
+    Serial.print("setCalibration: ");
     Serial.print(calibrationData[0][0]);
     Serial.print(", ");
     Serial.print(calibrationData[0][1]);

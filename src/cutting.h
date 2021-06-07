@@ -19,7 +19,7 @@ void cut::on (int speed) { //motor cut rotate from MIN to MAX
 
 void cut::setup (){ //setup for the esc module
     write.info(String("CUTTER SETUP"));
-
+    esc.writeMicroseconds(CUT_OFF);
     if(CUT_ENABLED){
         delay(1000);
         esc.writeMicroseconds(CUT_OFF);

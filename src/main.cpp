@@ -20,10 +20,11 @@ void setup() {
   LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
-  engineSET();
-  sensor.setCompass(CUSTOM);
   esc.attach(CUTTER_PIN);
   cutter.setup();
+  engineSET();
+  sensor.setup();
+  sensor.setCompass(CUSTOM);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);
