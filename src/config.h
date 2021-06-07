@@ -11,7 +11,7 @@
 #define WHEEL_DIAM  12 //in centimeters
 #define ROTATION_SPEED  0.42 // 25 RPM, 0.4167 rotztion for second
 
-unsigned int enginePWR = 75;
+unsigned int enginePWR = 50;
 
 #define CUTTER_PIN  8
 #define CUTTER_AMP_PIN  1 //the analog pin where read the consumption of the motor for cutting

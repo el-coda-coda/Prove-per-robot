@@ -2,11 +2,10 @@ int deg_media = 0;
 int i = 0;
 
 int compassReadMedia(){
-    for(i = 0; i < 50; i++){
+    for(i = 0; i < 10; i++){
         deg_media += sensor.compass();
-        delay(2);
     }
-    deg_media = deg_media/50;
+    deg_media = deg_media/10;
     write.verbose(String("DEG :") + deg_media + String("°"));
     return deg_media;
 }
@@ -29,17 +28,11 @@ bool cdDeg (int deg_set, String direction, int deg){
 		deg_diff = deg_set - deg;
 
 		if(deg_diff < 0){
-			while ((compassReadMedia() - deg_diff) > 0){
-				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
-				delay(10);
-			}
+			while ((sensor.compass() - deg_diff) > 0) write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
 		if(deg_diff >= 0){
 			deg_fin = deg_set - deg;
-			while (compassReadMedia() > deg_fin){
-				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
-				delay(10);
-			}
+			while (sensor.compass() > deg_fin)    write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
 	}
 
@@ -47,17 +40,11 @@ bool cdDeg (int deg_set, String direction, int deg){
 		deg_diff = 360 - (deg_set + deg);
 
 		if(deg_diff < 0){
-			while ((compassReadMedia() + deg_diff) < 360){
-				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
-				delay(10);
-			}
+			while ((sensor.compass() + deg_diff) < 360)   write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
 		if(deg_diff >= 0){
 			deg_fin = deg_set + deg;
-			while(compassReadMedia() < deg_fin){
-				write.debug(String("CURR DEG: ") + String(compassReadMedia()));
-				delay(10);
-			}
+			while(sensor.compass() < deg_fin) write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
 	}
 	write.debug(String("-------------"));

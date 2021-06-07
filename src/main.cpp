@@ -17,7 +17,7 @@ void setup() {
   pinMode(LED_SETUP, OUTPUT);
   pinMode(PANEL_PIN, OUTPUT);
   digitalWrite(LED_SETUP, HIGH);
-  LOG_LEVEL = INFO;
+  LOG_LEVEL = DEBUG;
   Wire.begin();
   Serial.begin(115200); 
   esc.attach(CUTTER_PIN);
@@ -65,7 +65,13 @@ void loop() {
       Serial.print(String(command.substring(7)));
       cutter.on(x);
     }
-
-    if (command.startsWith("-CUT OPEN")) esc.writeMicroseconds(2000);
+    if (command.startsWith("-CUT MAX")) esc.writeMicroseconds(2000);
+    if (command.startsWith("-LVL INFO")) LOG_LEVEL = INFO;
+    if (command.startsWith("-LVL DEBUG")) LOG_LEVEL = DEBUG;
+    if (command.startsWith("-LVL VERBOSE")) LOG_LEVEL = VERBOSE;
+    if (command.startsWith("-COMPASS")){
+      engineON(50, RIGHT);
+      write.info(String(sensor.compass()));
+    }
   }
 }
