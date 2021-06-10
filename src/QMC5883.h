@@ -13,6 +13,7 @@ int compassReadMedia(){
 bool cdDeg (int deg_set, String direction, int deg){
 	int deg_diff;
 	int deg_fin;
+    int deg_in = deg_set;
 
 	if ((direction != LEFT) && (direction != RIGHT)){
 		write.info("INVALID DIRECTION: " + String(direction));
@@ -28,9 +29,11 @@ bool cdDeg (int deg_set, String direction, int deg){
 		deg_diff = deg_set - deg;
 
 		if(deg_diff < 0){
+            write.debug(String("CASE 1"));  
 			while ((sensor.compass() - deg_diff) > 0) write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
 		if(deg_diff >= 0){
+            write.debug(String("CASE 2"));
 			deg_fin = deg_set - deg;
 			while (sensor.compass() > deg_fin)    write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}
@@ -38,11 +41,26 @@ bool cdDeg (int deg_set, String direction, int deg){
 
 	if(direction == RIGHT){
 		deg_diff = 360 - (deg_set + deg);
+        write.debug(String("DEG DIFF: ") + String(deg_diff));
 
 		if(deg_diff < 0){
-			while ((sensor.compass() + deg_diff) < 360)   write.debug(String("CURR DEG: ") + String(sensor.compass()));
+      write.debug(String("CASE 3 pt 1"));
+			while ((deg_in + deg_diff) < 360){
+        deg_in = sensor.compass();
+        write.debug(String("COMP DEG: ") + String(sensor.compass()));
+        write.debug(String("CURR DEG: ") + String(deg_in));
+        write.debug(String("DEG + DIFF: ") + String(deg_in + deg_diff));
+        }
+      write.debug(String("CASE 3 pt 2"));
+      while ((deg_in + deg_diff) < 0){
+        deg_in = sensor.compass();
+        write.debug(String("COMP DEG: ") + String(sensor.compass()));
+        write.debug(String("CURR DEG: ") + String(deg_in));
+        write.debug(String("DEG + DIFF: ") + String(deg_in + deg_diff));
+        }
 		}
 		if(deg_diff >= 0){
+            write.debug(String("CASE 4"));
 			deg_fin = deg_set + deg;
 			while(sensor.compass() < deg_fin) write.debug(String("CURR DEG: ") + String(sensor.compass()));
 		}

@@ -45,12 +45,12 @@ void loop() {
     if (command.startsWith("-RIGHT")){
      int x = (command.substring(6).toInt());
      Serial.print(String(command.substring(6)));
-     segmentCURVE(x, RIGHT, compassReadMedia());
+     segmentCURVE(x, RIGHT, sensor.compass());
     }
     if (command.startsWith("-LEFT")){
      int x = (command.substring(5).toInt());
      Serial.print(String(command.substring(5)));
-     segmentCURVE(x, LEFT, compassReadMedia());
+     segmentCURVE(x, LEFT, sensor.compass());
     }
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);
@@ -69,9 +69,6 @@ void loop() {
     if (command.startsWith("-LVL INFO")) LOG_LEVEL = INFO;
     if (command.startsWith("-LVL DEBUG")) LOG_LEVEL = DEBUG;
     if (command.startsWith("-LVL VERBOSE")) LOG_LEVEL = VERBOSE;
-    if (command.startsWith("-COMPASS")){
-      engineON(50, RIGHT);
-      write.info(String(sensor.compass()));
-    }
+    if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
   }
 }

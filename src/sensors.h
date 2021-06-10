@@ -13,6 +13,11 @@ void sensors::setup(){
     //COMPASS
     qmc.init();
     qmc.setSmoothing(10, true);
+    qmc.read();
+    for(int i = 0; i < 30; i++){
+        qmc.getAzimuth();
+        delay(10);
+    }
     //CUTTER AMP
     cutterOffset = 0;
     int i;
@@ -49,7 +54,6 @@ int sensors::compass(){
     unsigned int deg = 0;
     for (int i = 0; i < 5; i ++){
         deg += qmc.getAzimuth();
-        delay(3);
     }
     deg /= 5;
     write.verbose(String("DG: ") + deg + String("°"));
