@@ -17,6 +17,7 @@ void setup() {
   pinMode(LED_SETUP, OUTPUT);
   pinMode(PANEL_PIN, OUTPUT);
   digitalWrite(LED_SETUP, HIGH);
+  digitalWrite(CUTTER_PIN, LOW);
   LOG_LEVEL = DEBUG;
   Wire.begin();
   Serial.begin(115200); 
