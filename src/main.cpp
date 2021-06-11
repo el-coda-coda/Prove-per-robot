@@ -29,7 +29,6 @@ void setup() {
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
 
   delay(2000);
-  write.verbose(String("First compass: ") + compassReadMedia());
   digitalWrite(LED_SETUP, LOW);
 }
 
@@ -55,6 +54,11 @@ void loop() {
     }
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);
+    if (command.startsWith("-ENGINE POWER")){
+      int x = (command.substring(13).toInt());
+      Serial.print(String(command.substring(7)));
+      enginePWR = x;
+    }
     if (command.startsWith("-CALIBRATION")){
       engineON(50, RIGHT);
       qmcCalibration();
