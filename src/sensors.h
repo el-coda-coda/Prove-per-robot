@@ -41,7 +41,7 @@ bool sensors::setCompass(String slope){
     unsigned long compassSET = millis();
     delay(50);
     write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s") + String(" ") + slope);
-    if(slope == "FLAT") qmc.setCalibration(-468, 877, 0, 1523, -787, 0);
+    if(slope == "FLAT") qmc.setCalibration(-600, 900, -600, 1545, -800, 170);
     if(slope == "CUSTOM") return true;
     else{
         write.info(String("PLS insert the slope"));
@@ -50,13 +50,15 @@ bool sensors::setCompass(String slope){
 }
 
 int sensors::compass(){
+    long time_set = millis();
     qmc.read();
     unsigned int deg = 0;
-    for (int i = 0; i < 5; i ++){
+    for (int i = 0; i < 10; i ++){
         deg += qmc.getAzimuth();
     }
-    deg /= 5;
+    deg /= 10;
     write.verbose(String("DG: ") + deg + String("°"));
+    write.verbose(String("COMPASS IN: ") + String(millis() - time_set));
     return deg;
 }
 

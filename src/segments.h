@@ -1,5 +1,9 @@
-int segmentCURVE(int deg, String direction, int deg_set)
-{
+int segmentCURVE(int deg, String direction, int deg_set){
+    engineOFF();
+    for(int i = 0; i < 5; i++){
+        write.verbose(String("CURR DEG: ") + String(sensor.compass()));
+        delay(100);
+    }
     engineON(enginePWR, direction);
     cdDeg(deg_set, direction, deg);
     engineOFF();
@@ -32,11 +36,11 @@ void segmentStraight(String direction, int distance){ // distance in BOH
     const int degSet = compassReadMedia();
     int standardVel = 125;
     delay(50);
-    write.info("STARTED STRAIGHT");
+    write.info(String("STARTED STRAIGHT"));
     write.info(String(calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)) + String(" ms"));
     write.info(String(millis()) + String(" ms"));
     long set_time = millis();
-    while(millis() - set_time <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
+    while((millis() - set_time) <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
         digitalWrite(LED_SETUP, HIGH);
         write.info("IN THE WHILE");
         write.info(String("COMPASS: ") + compassStraight(degSet));
