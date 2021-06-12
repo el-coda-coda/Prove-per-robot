@@ -60,7 +60,7 @@ void loop() {
       enginePWR = x;
     }
     if (command.startsWith("-CALIBRATION")){
-      engineON(50, RIGHT);
+      engineON(enginePWR, RIGHT);
       qmcCalibration();
       engineOFF();
     }
