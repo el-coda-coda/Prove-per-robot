@@ -18,7 +18,7 @@ void setup() {
   pinMode(PANEL_PIN, OUTPUT);
   digitalWrite(LED_SETUP, HIGH);
   digitalWrite(CUTTER_PIN, LOW);
-  LOG_LEVEL = DEBUG;
+  LOG_LEVEL = INFO;
   Wire.begin();
   Serial.begin(115200); 
   esc.attach(CUTTER_PIN);
@@ -75,5 +75,6 @@ void loop() {
     if (command.startsWith("-LVL DEBUG")) LOG_LEVEL = DEBUG;
     if (command.startsWith("-LVL VERBOSE")) LOG_LEVEL = VERBOSE;
     if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
+    if (command.startsWith("-FIRST COMPASS")) firstCompass();
   }
 }
