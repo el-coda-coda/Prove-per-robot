@@ -10,6 +10,20 @@ int compassReadMedia(){
     return deg_media;
 }
 
+void firstCompass(){
+  long timeSet = millis();
+  int deg_in = sensor.compass();
+  int deg_last = deg_in + 100; // + 100 is just a way to make deg_last and dag_in different, in order to can use the while
+  while ((deg_in > (deg_last + 1)) || (deg_in < (deg_last - 1))){
+    deg_last = deg_in;
+    deg_in = sensor.compass();
+    write.info(String("NEW DEG: ") + String(deg_in));
+    write.info(String("LAST DEG: ") + String(deg_last));
+    delay(500);
+  }
+  write.debug(String("FIRST COMPASS COMPLETED IN: ") + String(millis() - timeSet) + String(" ms"));
+}
+
 bool cdDeg (int deg_set, String direction, int deg){
   int deg_diff;
   int deg_fin;
