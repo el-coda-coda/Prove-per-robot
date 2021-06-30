@@ -77,5 +77,7 @@ void loop() {
     if (command.startsWith("-LVL VERBOSE")) LOG_LEVEL = VERBOSE;
     if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
     if (command.startsWith("-FIRST COMPASS")) firstCompass();
+    if (command.startsWith("-ENABLE CUT")) cut_enabled  = true;
+    if (command.startsWith("-DISABLE CUT")) cut_enabled  = false;
   }
 }

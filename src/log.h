@@ -56,7 +56,7 @@ bool logging::stop(){
     if(Serial.available()){
         String command = Serial.readString();
         if (command.startsWith("-STOP")){
-            Serial.println(command);
+            Serial.print(command);
             return true;
         }
         else return false;
