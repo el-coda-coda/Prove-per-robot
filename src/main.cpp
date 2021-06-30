@@ -39,18 +39,19 @@ void loop() {
     if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
     if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);
     if (command.startsWith("-STRAIGHT")){
-       int x = (command.substring(9).toInt());
-       segmentStraight(STRAIGHT, x);
+      int x = (command.substring(9).toInt());
+      //segmentStraight(STRAIGHT, x);
+      engineON(enginePWR, STRAIGHT);
     }
     if (command.startsWith("-RIGHT")){
-     int x = (command.substring(6).toInt());
-     Serial.print(String(command.substring(6)));
-     segmentCURVE(x, RIGHT, sensor.compass());
+      int x = (command.substring(6).toInt());
+      Serial.print(String(command.substring(6)));
+      segmentCURVE(x, RIGHT, sensor.compass());
     }
     if (command.startsWith("-LEFT")){
-     int x = (command.substring(5).toInt());
-     Serial.print(String(command.substring(5)));
-     segmentCURVE(x, LEFT, sensor.compass());
+      int x = (command.substring(5).toInt());
+      Serial.print(String(command.substring(5)));
+      segmentCURVE(x, LEFT, sensor.compass());
     }
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);

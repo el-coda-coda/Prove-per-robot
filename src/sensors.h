@@ -25,6 +25,9 @@ void sensors::setup(){
         cutterOffset += analogRead(CUTTER_AMP_PIN);
     }
     cutterOffset /= i;
+
+    //PANEL SETUP
+    digitalWrite(PANEL_PIN, HIGH);
 }
 
 int sensors::battery(){
