@@ -35,6 +35,7 @@ class logging{
     void info(String message);
     void debug(String message);
     void verbose(String message);
+    bool stop();
 };
 
 void logging::info(String message){
@@ -50,3 +51,14 @@ void logging::verbose(String message){
 }
 
 logging write;
+
+bool logging::stop(){
+    if(Serial.available()){
+        String command = Serial.readString();
+        if (command.startsWith("-STOP")){
+            Serial.println(command);
+            return true;
+        }
+        else return false;
+    }
+}

@@ -34,7 +34,7 @@ bool segmentDegSet()
 
 void segmentStraight(String direction, int distance){ // distance in BOH
     const int degSet = compassReadMedia();
-    int standardVel = 125;
+    int standardVel = enginePWR;
     delay(50);
     write.info(String("STARTED STRAIGHT"));
     write.info(String(calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)) + String(" ms"));
@@ -45,7 +45,7 @@ void segmentStraight(String direction, int distance){ // distance in BOH
         write.info("IN THE WHILE");
         write.info(String("COMPASS: ") + compassStraight(degSet));
         int i = 0;
-        engineON(50, STRAIGHT);
+        engineON(enginePWR, STRAIGHT);
         while(compassStraight(degSet).startsWith("RIGHT")){
             engineDIR(standardVel, standardVel - i);
             i++; 
