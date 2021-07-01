@@ -20,6 +20,8 @@ void sensors::setup(){
         qmc.getAzimuth();
         delay(10);
     }
+    write.verbose(String("DEG SETUP: ") + String(qmc.getAzimuth()));
+
     //CUTTER AMP
     cutterOffset = 0;
     int i;
@@ -27,9 +29,19 @@ void sensors::setup(){
         cutterOffset += analogRead(CUTTER_AMP_PIN);
     }
     cutterOffset /= i;
+    write.verbose(String("CUTTER OFFSET: ") + String(cutterOffset));
 
     //PANEL SETUP
     digitalWrite(SWITCH_PANEL_PIN, HIGH);
+
+    //PANEL AMP
+    panelOffset = 0;
+    int i;
+    for(i = 0; i < 50; i++){
+        panelOffset += analogRead(CUTTER_AMP_PIN);
+    }
+    panelOffset /= i;
+    write.verbose(String("PANEL OFFSET: ") + String(panelOffset));
 }
 
 int sensors::battery(){
@@ -87,5 +99,17 @@ float sensors::panelVolts() {
     return (voltsPanel/1000);
 }
 
+float sensors::panelAmp()   {
+    long timeSet = millis();
+    digitalWrite(SWITCH_PANEL_PIN, HIGH);
+    delay(20);
+    float ampPanel=panelOffset-float(analogRead(READ_PANEL_PIN));
+    ampPanel=(ampPanel*5.0/1024.0)/PANEL_SCALE;
+    ampPanel=constrain(ampPanel, 0, 2.0);
+    write.debug(String("PANEL: ") + String(ampPanel) + String(" A"));
+    write.verbose(String("PANELAMP completed in: ") + String(millis() - timeSet) + String(" ms"));
+    return ampPanel;
+
+}
 
 sensors sensor;
