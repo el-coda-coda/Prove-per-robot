@@ -79,5 +79,7 @@ void loop() {
     if (command.startsWith("-FIRST COMPASS")) firstCompass();
     if (command.startsWith("-ENABLE CUT")) cut_enabled  = true;
     if (command.startsWith("-DISABLE CUT")) cut_enabled  = false;
+    if (command.startsWith("-PANEL AMP")) Serial.print(String(sensor.panelAmp()));
+    if (command.startsWith("-PANEL VOLT"))  Serial.print(String(sensor.panelVolts()));
   }
 }
