@@ -7,6 +7,8 @@ class sensors {
     bool setCompass(String slope);
     int compass();
     float cutter();
+    float panelVolts();
+    float panelAmp();
 };
 
 void sensors::setup(){
@@ -27,16 +29,16 @@ void sensors::setup(){
     cutterOffset /= i;
 
     //PANEL SETUP
-    digitalWrite(PANEL_PIN, HIGH);
+    digitalWrite(SWITCH_PANEL_PIN, HIGH);
 }
 
 int sensors::battery(){
-    digitalWrite(PANEL_PIN, LOW);
+    digitalWrite(SWITCH_PANEL_PIN, LOW);
     delay(20);
     float bat = BAT_SCALE * float(analogRead(BAT_PIN));
     int bat_100 = 100.0 * (bat - BAT_MIN)/(BAT_MAX - BAT_MIN);
     bat_100 = constrain(bat_100, 0, 100);
-    digitalWrite(PANEL_PIN, HIGH);
+    digitalWrite(SWITCH_PANEL_PIN, HIGH);
     return bat_100;
 }
 
@@ -74,5 +76,16 @@ float sensors::cutter()  {
     write.verbose(String("Cutter power check in: ") + String(timeSet - millis()) + String("s"));
     return cutterPower;
 }
+
+float sensors::panelVolts() {
+    long timeSet = millis();
+    int analogPanel = analogRead(READ_PANEL_PIN);
+    int voltsPanel = map(analogPanel, 0, 1023, 0, 18000);
+    if (voltsPanel < 400) voltsPanel = 0;
+    write.debug(String("PANEL: ") + String(voltsPanel) + String(" mV"));
+    write.verbose(String("PANELVOLTS completed in: ") + String(millis() - timeSet) + String(" ms"));
+    return (voltsPanel/1000);
+}
+
 
 sensors sensor;

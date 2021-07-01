@@ -24,7 +24,8 @@ float cutterInputScale = 0.88;
 bool cut_enabled  = true;
 
 //SOLAR PANEL
-#define PANEL_PIN   7
+#define SWITCH_PANEL_PIN   7
+#define READ_PANEL_PIN  2
 
 //BATTERY
 #define BAT_PIN  3

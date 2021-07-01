@@ -15,7 +15,7 @@
 
 void setup() {
   pinMode(LED_SETUP, OUTPUT);
-  pinMode(PANEL_PIN, OUTPUT);
+  pinMode(SWITCH_PANEL_PIN, OUTPUT);
   digitalWrite(LED_SETUP, HIGH);
   digitalWrite(CUTTER_PIN, LOW);
   LOG_LEVEL = INFO;
