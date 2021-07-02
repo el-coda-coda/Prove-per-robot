@@ -12,6 +12,8 @@ class sensors {
 };
 
 void sensors::setup(){
+    int i;
+
     //COMPASS
     qmc.init();
     qmc.setSmoothing(10, true);
@@ -24,24 +26,19 @@ void sensors::setup(){
 
     //CUTTER AMP
     cutterOffset = 0;
-    int i;
     for(i = 0; i < 50; i++){
         cutterOffset += analogRead(CUTTER_AMP_PIN);
     }
     cutterOffset /= i;
     write.verbose(String("CUTTER OFFSET: ") + String(cutterOffset));
 
-    //PANEL SETUP
-    digitalWrite(SWITCH_PANEL_PIN, HIGH);
-
     //PANEL AMP
     panelOffset = 0;
-    int i;
     for(i = 0; i < 50; i++){
         panelOffset += analogRead(CUTTER_AMP_PIN);
     }
     panelOffset /= i;
-    write.verbose(String("PANEL OFFSET: ") + String(panelOffset));
+    write.info(String("PANEL OFFSET: ") + String(panelOffset));
 }
 
 int sensors::battery(){
@@ -92,7 +89,7 @@ float sensors::cutter()  {
 float sensors::panelVolts() {
     long timeSet = millis();
     int analogPanel = analogRead(READ_PANEL_PIN);
-    int voltsPanel = map(analogPanel, 0, 1023, 0, 18000);
+    float voltsPanel = map(analogPanel, 0, 1023, 0, 18000);
     if (voltsPanel < 400) voltsPanel = 0;
     write.debug(String("PANEL: ") + String(voltsPanel) + String(" mV"));
     write.verbose(String("PANELVOLTS completed in: ") + String(millis() - timeSet) + String(" ms"));
@@ -101,11 +98,9 @@ float sensors::panelVolts() {
 
 float sensors::panelAmp()   {
     long timeSet = millis();
-    digitalWrite(SWITCH_PANEL_PIN, HIGH);
-    delay(20);
-    float ampPanel=panelOffset-float(analogRead(READ_PANEL_PIN));
-    ampPanel=(ampPanel*5.0/1024.0)/PANEL_SCALE;
-    ampPanel=constrain(ampPanel, 0, 2.0);
+    float ampPanel = panelOffset - float(analogRead(READ_PANEL_PIN));
+    ampPanel = (ampPanel * 5.0 / 1024.0) / panel_scale;
+    ampPanel = constrain(ampPanel, 0, 1.8);
     write.debug(String("PANEL: ") + String(ampPanel) + String(" A"));
     write.verbose(String("PANELAMP completed in: ") + String(millis() - timeSet) + String(" ms"));
     return ampPanel;
