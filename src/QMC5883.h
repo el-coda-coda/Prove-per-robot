@@ -139,6 +139,7 @@ String qmcCalibration() {
   int t = 0;
   int c = 0;
 
+  Serial.println("CALIBRATING ");
   while (true){
     int x, y, z;
   
@@ -180,7 +181,7 @@ String qmcCalibration() {
   }
 
   if (changed && !done) {
-    Serial.println("CALIBRATING... Keep moving your sensor around.");
+    Serial.print("#");
     c = millis();
   }
     t = millis();
