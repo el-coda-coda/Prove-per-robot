@@ -50,8 +50,6 @@ void logging::verbose(String message){
     if(LOG_LEVEL == VERBOSE)    type(message);
 }
 
-logging write;
-
 bool logging::stop(){
     if(Serial.available()){
         String command = Serial.readString();
@@ -62,3 +60,5 @@ bool logging::stop(){
         else return false;
     }
 }
+
+logging write;

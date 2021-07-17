@@ -27,7 +27,6 @@ void setup() {
   sensor.setup();
   sensor.setCompass(CUSTOM);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
-
   delay(2000);
   digitalWrite(LED_SETUP, LOW);
 }
@@ -64,6 +63,7 @@ void loop() {
       engineON(enginePWR, RIGHT);
       qmcCalibration();
       engineOFF();
+      firstCompass();
     }
     if (command.startsWith("-CUT OFF")) cutter.off();
     if (command.startsWith("-CUT ON")){

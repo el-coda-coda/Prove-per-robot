@@ -72,7 +72,7 @@ int sensors::compass(){
     }
     deg /= 10;
     write.verbose(String("DG: ") + deg + String("°"));
-    write.verbose(String("COMPASS IN: ") + String(millis() - time_set));
+    write.verbose(String("COMPASS COMPLETED IN: ") + String(millis() - time_set));
     return deg;
 }
 
