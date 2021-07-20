@@ -39,11 +39,22 @@ float panelOffset = 0;
 //SETUP LED PIN
 #define LED_SETUP   13
 
+//ULTRASONIC SENSORS
+#define TRIG_PIN_1  5
+#define TRIG_PIN_2  6
+#define ECHO_PIN_1  2
+#define ECHO_PIN_2  13
+
+#define US_OUTRANGE 38000
+#define US_SCALE    0.034
+#define NO_OBSTACLE 1000
+
+bool ultrasonic_enabled = false;
+
 //QMC5883L
 int deg_threshold;
 
 //COMUNICATION
-
 String dir;
 String LEFT = "LEFT";
 String RIGHT = "RIGHT";

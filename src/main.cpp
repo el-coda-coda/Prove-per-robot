@@ -81,5 +81,7 @@ void loop() {
     if (command.startsWith("-DISABLE CUT")) cut_enabled  = false;
     if (command.startsWith("-PANEL AMP")) Serial.println(String(sensor.panelAmp()));
     if (command.startsWith("-PANEL VOLT"))  Serial.println(String(sensor.panelVolts()));
+    if (command.startsWith("-ENABLE US")) ultrasonic_enabled = true;
+    if (command.startsWith("-DISABLE US")) ultrasonic_enabled = false;
   }
 }

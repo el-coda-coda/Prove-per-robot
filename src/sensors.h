@@ -9,6 +9,7 @@ class sensors {
     float cutter();
     float panelVolts();
     float panelAmp();
+    long ultrasonic(int trig, int echo);
 };
 
 void sensors::setup(){
@@ -72,7 +73,7 @@ int sensors::compass(){
     }
     deg /= 10;
     write.verbose(String("DG: ") + deg + String("°"));
-    write.verbose(String("COMPASS COMPLETED IN: ") + String(millis() - time_set));
+    write.verbose(String("COMPASS completed: ") + String(millis() - time_set));
     return deg;
 }
 
@@ -105,6 +106,26 @@ float sensors::panelAmp()   {
     write.verbose(String("PANELAMP completed in: ") + String(millis() - timeSet) + String(" ms"));
     return ampPanel;
 
+}
+
+long ultrasonic(int trig, int echo){
+    long distance;
+    long timeSet = millis();
+    if(ultrasonic_enabled){
+        digitalWrite(trig, LOW);
+        digitalWrite(trig, HIGH);
+        delayMicroseconds(10);
+        digitalWrite(trig, LOW);
+
+        long duration = pulseIn(echo, HIGH, US_OUTRANGE);
+        distance = US_SCALE * (duration/2);
+        if(duration > US_OUTRANGE)  distance = NO_OBSTACLE; 
+    }
+    else    distance = NO_OBSTACLE;
+    
+    write.debug(String("TRIG: " + String(trig) + "; ECHO " + String(echo) + " - DISTANCE " + String(distance)));
+    write.verbose(String("US completed in: ") + String(millis() - timeSet));
+    return distance;
 }
 
 sensors sensor;
