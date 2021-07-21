@@ -26,8 +26,8 @@ bool cut_enabled  = true;
 //SOLAR PANEL
 #define SWITCH_PANEL_PIN   7
 #define READ_PANEL_PIN  2
+#define PANEL_SCALE 0.185
 
-float panel_scale = 0.185;
 float panelOffset = 0;
 
 //BATTERY

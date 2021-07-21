@@ -54,17 +54,16 @@ void sensors::setup(){
 int sensors::battery(){
     digitalWrite(SWITCH_PANEL_PIN, LOW);
     delay(20);
-    float bat = BAT_SCALE * float(analogRead(BAT_PIN));
-    int bat_100 = 100.0 * (bat - BAT_MIN)/(BAT_MAX - BAT_MIN);
-    bat_100 = constrain(bat_100, 0, 100);
+    int bat = (analogRead(BAT_PIN));
+    int batPerc = calc.batteryLevel(bat);
     digitalWrite(SWITCH_PANEL_PIN, HIGH);
-    return bat_100;
+    return batPerc;
 }
 
 bool sensors::setCompass(String slope){
     unsigned long compassSET = millis();
     delay(50);
-    write.info(String("compassSET in ") + float (millis() - compassSET)/1000  + String(" s") + String(" ") + slope);
+    write.info(String("compassSET in ") + float (millis() - compassSET) + String(" ms") + String(" ") + slope);
     if(slope == "FLAT") qmc.setCalibration(-600, 900, -600, 1545, -800, 170);
     if(slope == "CUSTOM") return true;
     else{
@@ -88,9 +87,8 @@ int sensors::compass(){
 
 float sensors::cutter()  {
     long timeSet = millis();
-    int cutterPower = float(analogRead(CUTTER_AMP_PIN)) - cutterOffset;
-    cutterPower = (cutterPower * 5.0/1023.0)/cutterScale;
-    cutterPower  = constrain(cutterPower, 0, 5.0);
+    float cutterPower = analogRead(CUTTER_AMP_PIN);
+    cutterPower = calc.cutterAbsoption(cutterPower);
     write.debug(String("Cutter current absorbed: ") + String(cutterPower));
     write.verbose(String("Cutter power check in: ") + String(timeSet - millis()) + String("s"));
     return cutterPower;
@@ -108,9 +106,8 @@ float sensors::panelVolts() {
 
 float sensors::panelAmp()   {
     long timeSet = millis();
-    float ampPanel = panelOffset - float(analogRead(READ_PANEL_PIN));
-    ampPanel = (ampPanel * 5.0 / 1024.0) / panel_scale;
-    ampPanel = constrain(ampPanel, 0, 1.8);
+    float ampPanel = float(analogRead(READ_PANEL_PIN));
+    ampPanel = calc.PanelAmp(ampPanel);
     write.debug(String("PANEL: ") + String(ampPanel) + String(" A"));
     write.verbose(String("PANELAMP completed in: ") + String(millis() - timeSet) + String(" ms"));
     return ampPanel;
@@ -127,8 +124,7 @@ long sensors::ultrasonic(int trig, int echo){
         digitalWrite(trig, LOW);
 
         long duration = pulseIn(echo, HIGH, US_OUTRANGE);
-        distance = US_SCALE * (duration/2);
-        if(duration > US_OUTRANGE)  distance = NO_OBSTACLE; 
+        distance = calc.usDistance(duration);
     }
     else    distance = NO_OBSTACLE;
 
