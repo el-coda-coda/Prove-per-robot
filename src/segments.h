@@ -20,7 +20,6 @@ void segmentStraight(String direction, int distance){ // distance in BOH
     write.info(String(millis()) + String(" ms"));
     long set_time = millis();
     while((millis() - set_time) <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
-        digitalWrite(LED_SETUP, HIGH);
         write.info("IN THE WHILE");
         write.info(String("COMPASS: ") + compassStraight(degSet));
         int i = 0;
@@ -42,5 +41,4 @@ void segmentStraight(String direction, int distance){ // distance in BOH
     write.info("FINISHED WHILE");
     write.info(String("STRAIGHT FINISHED IN ") + String(millis() - set_time) + String(" ms"));
     engineOFF();
-    digitalWrite(LED_SETUP, LOW);
 }

@@ -40,6 +40,15 @@ void sensors::setup(){
     }
     panelOffset /= i;
     write.info(String("PANEL OFFSET: ") + String(panelOffset));
+
+    //ULTRASONIC
+    pinMode(TRIG_PIN_1, OUTPUT);
+    pinMode(TRIG_PIN_2, OUTPUT);
+    pinMode(ECHO_PIN_1, INPUT);
+    pinMode(ECHO_PIN_2, INPUT);
+
+    digitalWrite(TRIG_PIN_1, LOW);
+    digitalWrite(TRIG_PIN_2, HIGH);
 }
 
 int sensors::battery(){
@@ -108,7 +117,7 @@ float sensors::panelAmp()   {
 
 }
 
-long ultrasonic(int trig, int echo){
+long sensors::ultrasonic(int trig, int echo){
     long distance;
     long timeSet = millis();
     if(ultrasonic_enabled){
@@ -122,7 +131,7 @@ long ultrasonic(int trig, int echo){
         if(duration > US_OUTRANGE)  distance = NO_OBSTACLE; 
     }
     else    distance = NO_OBSTACLE;
-    
+
     write.debug(String("TRIG: " + String(trig) + "; ECHO " + String(echo) + " - DISTANCE " + String(distance)));
     write.verbose(String("US completed in: ") + String(millis() - timeSet));
     return distance;

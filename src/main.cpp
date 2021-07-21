@@ -14,9 +14,7 @@
 #include <cutting.h>
 
 void setup() {
-  pinMode(LED_SETUP, OUTPUT);
   pinMode(SWITCH_PANEL_PIN, OUTPUT);
-  digitalWrite(LED_SETUP, HIGH);
   digitalWrite(CUTTER_PIN, LOW);
   LOG_LEVEL = INFO;
   Wire.begin();
@@ -28,15 +26,14 @@ void setup() {
   sensor.setCompass(CUSTOM);
   write.info(String("BAT: ") + String(sensor.battery()) + String(" %"));
   delay(2000);
-  digitalWrite(LED_SETUP, LOW);
 }
 
 void loop() {
   if(Serial.available()){
     String command = Serial.readString();
     Serial.print(String(command));
-    if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
-    if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);
+    /*if (command.startsWith("-ON")) digitalWrite(LED_SETUP, HIGH);
+    if (command.startsWith("-OFF"))  digitalWrite(LED_SETUP, LOW);*/
     if (command.startsWith("-STRAIGHT")){
       int x = (command.substring(9).toInt());
       //segmentStraight(STRAIGHT, x);
@@ -83,5 +80,16 @@ void loop() {
     if (command.startsWith("-PANEL VOLT"))  Serial.println(String(sensor.panelVolts()));
     if (command.startsWith("-ENABLE US")) ultrasonic_enabled = true;
     if (command.startsWith("-DISABLE US")) ultrasonic_enabled = false;
+    if (command.startsWith("-DISTANCE 1")) Serial.println(String(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1)));
+    if (command.startsWith("-DISTANCE 2")) Serial.println(String(sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
+    if (command.startsWith("-US SCREENING")){
+      while(!write.stop()){
+        Serial.print("1: ");
+        Serial.println(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1));
+        Serial.print("2: ");
+        Serial.println(sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2));
+        delay(200);
+      }
+    }
   }
 }

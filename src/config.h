@@ -21,7 +21,7 @@ unsigned int enginePWR = 100;
 int cutterOffset = 0;
 float cutterScale = 0.185;  //motor cut current scale V/A
 float cutterInputScale = 0.88;
-bool cut_enabled  = false;
+bool cut_enabled  = true;
 
 //SOLAR PANEL
 #define SWITCH_PANEL_PIN   7
@@ -36,9 +36,6 @@ float panelOffset = 0;
 #define BAT_MAX 13.8
 #define BAT_SCALE   0.054
 
-//SETUP LED PIN
-#define LED_SETUP   13
-
 //ULTRASONIC SENSORS
 #define TRIG_PIN_1  5
 #define TRIG_PIN_2  6
@@ -49,7 +46,7 @@ float panelOffset = 0;
 #define US_SCALE    0.034
 #define NO_OBSTACLE 1000
 
-bool ultrasonic_enabled = false;
+bool ultrasonic_enabled = true;
 
 //QMC5883L
 int deg_threshold;

@@ -47,14 +47,12 @@ bool cdDeg (int deg_set, String direction, int deg){
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
   	  }
       write.debug(String("CASE 1 pt 2"));  
   		while ((deg_in - deg_diff) > 360){ 
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
   	  }
     }
   	if(deg_diff >= 0){
@@ -64,7 +62,6 @@ bool cdDeg (int deg_set, String direction, int deg){
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
       }
   	}
   } 
@@ -77,14 +74,12 @@ bool cdDeg (int deg_set, String direction, int deg){
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
       }
       write.debug(String("CASE 3 pt 2"));
       while ((deg_in + deg_diff) < 0){
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
         }
   	}
   	if(deg_diff >= 0){
@@ -94,7 +89,6 @@ bool cdDeg (int deg_set, String direction, int deg){
         deg_in = sensor.compass();
         write.debug(String("CURR DEG: " + String(deg_in)));
         write.debug(String("DEG + DIFF: " + String(deg_in + deg_diff)));
-        //if(write.stop())  return false;
       }
   	}
   }
