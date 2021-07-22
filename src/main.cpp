@@ -6,17 +6,18 @@
 #include <LiquidCrystal_I2C.h>
 #include <config.h>
 #include <log.h>
+#include <calculates.h>
 #include <sensors.h>
+#include <ultrasonic.h>
 #include <engines.h>
 #include <QMC5883.h>
-#include <calculates.h>
 #include <segments.h>
 #include <cutting.h>
 
 void setup() {
   pinMode(SWITCH_PANEL_PIN, OUTPUT);
   digitalWrite(CUTTER_PIN, LOW);
-  LOG_LEVEL = INFO;
+  logLevel = INFO;
   Wire.begin();
   Serial.begin(115200); 
   esc.attach(CUTTER_PIN);
@@ -69,9 +70,9 @@ void loop() {
       cutter.on(x);
     }
     if (command.startsWith("-CUT MAX")) esc.writeMicroseconds(2000);
-    if (command.startsWith("-LVL INFO")) LOG_LEVEL = INFO;
-    if (command.startsWith("-LVL DEBUG")) LOG_LEVEL = DEBUG;
-    if (command.startsWith("-LVL VERBOSE")) LOG_LEVEL = VERBOSE;
+    if (command.startsWith("-LVL INFO")) logLevel = INFO;
+    if (command.startsWith("-LVL DEBUG")) logLevel = DEBUG;
+    if (command.startsWith("-LVL VERBOSE")) logLevel = VERBOSE;
     if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
     if (command.startsWith("-FIRST COMPASS")) firstCompass();
     if (command.startsWith("-ENABLE CUT")) cut_enabled  = true;
@@ -91,5 +92,6 @@ void loop() {
         delay(200);
       }
     }
+    if (command.startsWith("-ANGLE US"))  Serial.print(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
   }
 }

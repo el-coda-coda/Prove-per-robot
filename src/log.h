@@ -39,15 +39,15 @@ class logging{
 };
 
 void logging::info(String message){
-    if(LOG_LEVEL == INFO || LOG_LEVEL == DEBUG || LOG_LEVEL == VERBOSE)   type(message);
+    type(message);
 }
 
 void logging::debug(String message){
-    if(LOG_LEVEL == DEBUG || LOG_LEVEL == VERBOSE)  type(message);
+    if(logLevel < INFO) type(message);
 }
 
 void logging::verbose(String message){
-    if(LOG_LEVEL == VERBOSE)    type(message);
+    if(logLevel < DEBUG)    type(message);
 }
 
 bool logging::stop(){

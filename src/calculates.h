@@ -5,6 +5,7 @@ class calculate {
     float cutterAbsoption(int cut);
     int usDistance(int duration);
     float PanelAmp(float panel);
+    int distaneToDeg(int sideA, int sideB);
 };
 
 long calculate::rotationTime (int diam, int distance, float rot_speed){
@@ -36,6 +37,11 @@ float calculate::PanelAmp(float panel){
     panel = ((panelOffset - panel) * 5.0 / 1024.0) / PANEL_SCALE;
     panel = constrain(panel, 0, 1.8);
     return panel;
+}
+
+int calculate::distaneToDeg(int sideA, int sideB){ //side A is the "distance" and side b is the width of the robot
+    int deg = sideA/(sin(sideB)*DEG_TO_RAD);
+    return deg;
 }
 
 calculate calc;

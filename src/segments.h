@@ -42,3 +42,20 @@ void segmentStraight(String direction, int distance){ // distance in BOH
     write.info(String("STRAIGHT FINISHED IN ") + String(millis() - set_time) + String(" ms"));
     engineOFF();
 }
+
+String segmentSTRAIGHT (String direction){
+    int timeSet = millis();
+    while(!write.stop()){
+        if (!engineON(enginePWR, direction)){
+            engineOFF();
+            String curveDirection = angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2));
+            if(curveDirection.startsWith(RIGHT))    curveDirection = RIGHT;
+            if(curveDirection.startsWith(LEFT)) curveDirection = LEFT;
+            write.info(String("CURVE ") + String(curveDirection));
+            write.verbose(String("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms"));
+            return curveDirection;
+        }
+    }
+    write.verbose(String("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms"));
+    return String("OK");
+}
