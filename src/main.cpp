@@ -40,6 +40,8 @@ void loop() {
       //segmentStraight(STRAIGHT, x);
       engineON(enginePWR, STRAIGHT);
     }
+    if (command.startsWith("-US STRAIGHT")) Serial.println(segmentSTRAIGHT(STRAIGHT));
+    if (command.startsWith("-US BACK")) Serial.println(segmentSTRAIGHT(BACK));
     if (command.startsWith("-RIGHT")){
       int x = (command.substring(6).toInt());
       Serial.print(String(command.substring(6)));
