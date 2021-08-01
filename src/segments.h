@@ -1,7 +1,7 @@
 int segmentCURVE(int deg, String direction, int deg_set){
     engineOFF();
     for(int i = 0; i < 5; i++){
-        write.verbose(String("CURR DEG: ") + String(sensor.compass()));
+        write.verbose(String("CURR DEG: " + String(sensor.compass())));
         delay(100);
     }
     firstCompass();
@@ -39,7 +39,7 @@ void segmentStraight(String direction, int distance){ // distance in BOH
         if (command.startsWith("-STOP")) break;
     }
     write.info("FINISHED WHILE");
-    write.info(String("STRAIGHT FINISHED IN ") + String(millis() - set_time) + String(" ms"));
+    write.info(String("STRAIGHT comleted in " + String(millis() - set_time) + " ms"));
     engineOFF();
 }
 
@@ -56,6 +56,7 @@ String segmentSTRAIGHT (String direction){
             return curveDirection;
         }
     }
+    engineOFF();
     write.verbose(String("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms"));
     return String("OK");
 }

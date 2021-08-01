@@ -23,7 +23,7 @@ void sensors::setup(){
         qmc.getAzimuth();
         delay(10);
     }
-    write.verbose(String("DEG SETUP: ") + String(qmc.getAzimuth()));
+    write.info(String("DEG SETUP: " + String(qmc.getAzimuth())));
 
     //CUTTER AMP
     cutterOffset = 0;
@@ -31,7 +31,7 @@ void sensors::setup(){
         cutterOffset += analogRead(CUTTER_AMP_PIN);
     }
     cutterOffset /= i;
-    write.verbose(String("CUTTER OFFSET: ") + String(cutterOffset));
+    write.info(String("CUTTER OFFSET: " + String(cutterOffset)));
 
     //PANEL AMP
     panelOffset = 0;
@@ -39,7 +39,7 @@ void sensors::setup(){
         panelOffset += analogRead(CUTTER_AMP_PIN);
     }
     panelOffset /= i;
-    write.info(String("PANEL OFFSET: ") + String(panelOffset));
+    write.info(String("PANEL OFFSET: " + String(panelOffset)));
 
     //ULTRASONIC
     pinMode(TRIG_PIN_1, OUTPUT);
@@ -61,9 +61,9 @@ int sensors::battery(){
 }
 
 bool sensors::setCompass(String slope){
-    unsigned long compassSET = millis();
+    long compassSET = millis();
     delay(50);
-    write.info(String("compassSET in ") + float (millis() - compassSET) + String(" ms") + String(" ") + slope);
+    write.info(String("compassSET in " + String(millis() - compassSET) + " ms" + " " + String(slope)));
     if(slope == "FLAT") qmc.setCalibration(-600, 900, -600, 1545, -800, 170);
     if(slope == "CUSTOM") return true;
     else{
@@ -80,8 +80,8 @@ int sensors::compass(){
         deg += qmc.getAzimuth();
     }
     deg /= 10;
-    write.verbose(String("DG: ") + deg + String("°"));
-    write.verbose(String("COMPASS completed: ") + String(millis() - time_set));
+    write.verbose(String("DG: " + String(deg) + "°"));
+    write.verbose(String("COMPASS completed: " + String(millis() - time_set)));
     return deg;
 }
 
@@ -89,8 +89,8 @@ float sensors::cutter()  {
     long timeSet = millis();
     float cutterPower = analogRead(CUTTER_AMP_PIN);
     cutterPower = calc.cutterAbsoption(cutterPower);
-    write.debug(String("Cutter current absorbed: ") + String(cutterPower));
-    write.verbose(String("Cutter power check in: ") + String(timeSet - millis()) + String("s"));
+    write.debug(String("Cutter current absorbed: " + String(cutterPower)));
+    write.verbose(String("Cutter power check in: " + String(timeSet - millis()) + " ms"));
     return cutterPower;
 }
 
@@ -99,8 +99,8 @@ float sensors::panelVolts() {
     int analogPanel = analogRead(READ_PANEL_PIN);
     float voltsPanel = map(analogPanel, 0, 1023, 0, 18000);
     if (voltsPanel < 400) voltsPanel = 0;
-    write.debug(String("PANEL: ") + String(voltsPanel) + String(" mV"));
-    write.verbose(String("PANELVOLTS completed in: ") + String(millis() - timeSet) + String(" ms"));
+    write.debug(String("PANEL: " + String(voltsPanel) + " mV"));
+    write.verbose(String("PANELVOLTS completed in: " + String(millis() - timeSet) + " ms"));
     return (voltsPanel/1000);
 }
 
@@ -108,8 +108,8 @@ float sensors::panelAmp()   {
     long timeSet = millis();
     float ampPanel = float(analogRead(READ_PANEL_PIN));
     ampPanel = calc.PanelAmp(ampPanel);
-    write.debug(String("PANEL: ") + String(ampPanel) + String(" A"));
-    write.verbose(String("PANELAMP completed in: ") + String(millis() - timeSet) + String(" ms"));
+    write.debug(String("PANEL: " + String(ampPanel) + " A"));
+    write.verbose(String("PANELAMP completed in: " + String(millis() - timeSet) + " ms"));
     return ampPanel;
 
 }
@@ -129,7 +129,7 @@ long sensors::ultrasonic(int trig, int echo){
     else    distance = NO_OBSTACLE;
 
     write.debug(String("TRIG: " + String(trig) + "; ECHO " + String(echo) + " - DISTANCE " + String(distance)));
-    write.verbose(String("US completed in: ") + String(millis() - timeSet));
+    write.verbose(String("US completed in: " + String(millis() - timeSet) + " ms"));
     return distance;
 }
 

@@ -28,7 +28,7 @@ bool engineON(int pwr, String direction)  {
       digitalWrite(DIR_A, LOW);
       digitalWrite(DIR_B, HIGH);
     }
-    write.verbose(String("engine_ON ") + direction);
+    write.verbose(String("engine_ON " + String(direction)));
     return true;
   }
   else return false;
@@ -61,15 +61,15 @@ void engineDIR(int pwA, int pwB)  {
     analogWrite(DIR_A, HIGH);
   }
 
-  write.verbose(String("engineDIR ") + String(pwA) + String(" ") + String(pwB));
+  write.verbose(String("engineDIR " + String(pwA) + " " + String(pwB)));
 }
 
 void engineSET()  { 
-  unsigned long engineSETtime = millis();
+  long timeSet = millis();
   pinMode(PWR_A, OUTPUT);
   pinMode(PWR_B, OUTPUT);
   pinMode(DIR_A, OUTPUT);
   pinMode(DIR_B, OUTPUT);
   delay(100);
-  write.info(String("engineSET in ") + float (millis() - engineSETtime)/1000 + String(" s"));
+  write.info(String("engineSET in " + String(millis() - timeSet) + " ms"));
 }

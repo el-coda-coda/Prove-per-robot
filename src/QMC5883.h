@@ -6,7 +6,7 @@ int compassReadMedia(){
         deg_media += sensor.compass();
     }
     deg_media = deg_media/10;
-    write.verbose(String("DEG :") + deg_media + String("°"));
+    write.verbose(String("DEG :" + String(deg_media) + "°"));
     return deg_media;
 }
 
@@ -17,11 +17,11 @@ void firstCompass(){
   while ((deg_in > (deg_last + 1)) || (deg_in < (deg_last - 1))){
     deg_last = deg_in;
     deg_in = sensor.compass();
-    write.info(String("NEW DEG: ") + String(deg_in));
-    write.info(String("LAST DEG: ") + String(deg_last));
+    write.info(String("NEW DEG: " + String(deg_in)));
+    write.info(String("LAST DEG: " + String(deg_last)));
     delay(500);
   }
-  write.debug(String("FIRST COMPASS COMPLETED IN: ") + String(millis() - timeSet) + String(" ms"));
+  write.debug(String("FIRST COMPASS completed in: " + String(millis() - timeSet) + " ms"));
 }
 
 bool cdDeg (int deg_set, String direction, int deg){
@@ -30,14 +30,14 @@ bool cdDeg (int deg_set, String direction, int deg){
   int deg_in = deg_set;
 
   if ((direction != LEFT) && (direction != RIGHT)){
-  	write.info("INVALID DIRECTION: " + String(direction));
+  	write.info("INVALID DIRECTION: " + direction);
   	return false;
   }
 
   write.debug(String("---COMPASS---"));
-  write.debug(String("SET: ") + String(deg_set));
+  write.debug(String("SET: " + String(deg_set)));
   write.debug(String("DIR: " + direction));
-  write.debug(String("DEG: ") + String(deg));
+  write.debug(String("DEG: " + String(deg)));
 
   if(direction == LEFT){
   	deg_diff = deg_set - deg; 
@@ -67,7 +67,7 @@ bool cdDeg (int deg_set, String direction, int deg){
   } 
   if(direction == RIGHT){
   	deg_diff = 360 - (deg_set + deg);
-    write.debug(String("DEG DIFF: ") + String(deg_diff));
+    write.debug(String("DEG DIFF: " + String(deg_diff)));
 		if(deg_diff < 0){
       write.debug(String("CASE 3 pt 1"));
   		while ((deg_in + deg_diff) < 359 && (deg_in > 0)){
@@ -100,8 +100,8 @@ String compassStraight (int deg_set){
     String result = "OK";
     int deg = compassReadMedia(); //deg is the live deg from the compass
     long timeSet = millis();
-    write.info(String("DEG: ") + String(deg));
-    write.info(String("DEG SET: ") + String(deg_set));
+    write.info(String("DEG: " + String(deg)));
+    write.info(String("DEG SET: " + String(deg_set)));
     int deg_diff = 0;
     if (deg_set > deg){
         result = "RIGHT";
@@ -122,7 +122,7 @@ String compassStraight (int deg_set){
         result = "LEFT";
         deg_diff = 360 - deg + deg_set;
     }
-    write.info(String("C_STRAIGHT FINISHED IN ") + String(millis() - timeSet) + String(" ms"));
+    write.info(String("C_STRAIGHT FINISHED IN " + String(millis() - timeSet) + " ms"));
     return String(result + " " + String(deg_diff));
 }
 
