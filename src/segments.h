@@ -11,13 +11,13 @@ int segmentCURVE(int deg, String direction, int deg_set){
     return compassReadMedia();
 }
 
-String segmentSTRAIGHT (String direction, int distance){
+String segmentStraight (String direction, int distance){
     firstCompass(); //this is for have a "true" degSet
     const int degSet = compassReadMedia();
     long timeSet = millis();
-    long timeToArrive = calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED);
+    long timeToArrive = calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED) + timeSet;
     String result = "OK";
-    while((!write.stop()) && (result = "OK")){
+    while((!write.stop()) && (result = "OK") && (millis() < timeToArrive)){
         if (!engineON(enginePWR, direction)){
             engineOFF();
             rightEngineDiff, leftEngineDiff = 0;
@@ -34,7 +34,7 @@ String segmentSTRAIGHT (String direction, int distance){
         else    rightEngineDiff, leftEngineDiff = 0;
     }
     engineOFF();
-    write.verbose("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms");
+    write.verbose("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms; TimeToArrive: " + String(millis() - timeToArrive));
     rightEngineDiff, leftEngineDiff = 0;
     return result;
 }

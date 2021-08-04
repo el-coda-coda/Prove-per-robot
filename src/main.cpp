@@ -95,7 +95,7 @@ void loop() {
         delay(200);
       }
     }*/
-    if (command.startsWith("-US STRAIGHT")) write.info(String(segmentSTRAIGHT(STRAIGHT, 100)));
+    if (command.startsWith("-US STRAIGHT")) write.info(String(segmentStraight(STRAIGHT, 100)));
     if (command.startsWith("-ANGLE US"))  write.info(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
     command = " ";
 }
