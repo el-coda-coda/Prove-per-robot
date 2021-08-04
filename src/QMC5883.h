@@ -97,33 +97,18 @@ bool cdDeg (int deg_set, String direction, int deg){
 }
 
 String compassStraight (int deg_set){
-    String result = "OK";
-    int deg = compassReadMedia(); //deg is the live deg from the compass
+    String result = STRAIGHT;
+    int deg = compassReadMedia(); //deg is current deg from the compass
     long timeSet = millis();
-    write.info(String("DEG: " + String(deg)));
-    write.info(String("DEG SET: " + String(deg_set)));
-    int deg_diff = 0;
-    if (deg_set > deg){
-      result = "RIGHT";
-      deg_diff = deg_set - deg;
-    }
-    
-    if(deg_set < deg - 300){
-      result = "RIGHT";
-      deg_diff = 360 - deg_set + deg;
-    }
+    write.debug(String("DEG: " + String(deg)));
+    write.debug(String("DEG SET: " + String(deg_set)));
 
-    if (deg_set < deg ){
-      result = "LEFT";
-      deg_diff = deg - deg_set;
-    }
-
-    if (deg_set > deg + 300){
-      result = "LEFT";
-      deg_diff = 360 - deg + deg_set;
-    }
-    write.info(String("C_STRAIGHT FINISHED IN " + String(millis() - timeSet) + " ms"));
-    return String(result + " " + String(deg_diff));
+    if (deg_set > deg)  result = RIGHT;
+    if(deg_set < (deg - 300)) result = RIGHT;
+    if (deg_set < deg ) result = LEFT;
+    if (deg_set > deg + 300)  result = LEFT;
+    write.verbose(String("C_STRAIGHT completed in " + String(millis() - timeSet) + " ms"));
+    return result;
 }
 
 String qmcCalibration() {

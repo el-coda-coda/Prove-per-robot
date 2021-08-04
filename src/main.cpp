@@ -35,7 +35,7 @@ void setup(){
 void loop() {
   if(Serial.available()){
     command = Serial.readString();
-    Serial.print("[command] " + String(command) + " " + String(F) + " recived");
+    Serial.print("[command] " + String(command) + " " + String(F) + " recieved");
     F++;
   }
     if (command.startsWith("-STRAIGHT")){
@@ -95,7 +95,7 @@ void loop() {
         delay(200);
       }
     }*/
-    if (command.startsWith("-US STRAIGHT")) write.info(String(segmentSTRAIGHT(STRAIGHT)));
+    if (command.startsWith("-US STRAIGHT")) write.info(String(segmentSTRAIGHT(STRAIGHT, 100)));
     if (command.startsWith("-ANGLE US"))  write.info(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
     command = " ";
 }

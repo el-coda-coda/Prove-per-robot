@@ -1,30 +1,30 @@
 bool engineON(int pwr, String direction)  {
   float pwr_control = pwr * 2.55;
   if(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)) == STRAIGHT){
-    if (direction == STRAIGHT)  {
-      analogWrite(PWR_A, pwr_control);
-      analogWrite(PWR_B, pwr_control);
+    if (direction == BACK)  {
+      analogWrite(PWR_A, pwr_control + rightEngineDiff);
+      analogWrite(PWR_B, pwr_control + leftEngineDiff);
       digitalWrite(DIR_A, HIGH);
       digitalWrite(DIR_B, HIGH);
     }
 
-    if (direction == BACK)  {
-      analogWrite(PWR_A, pwr_control);
-      analogWrite(PWR_B, pwr_control);
+    if (direction == STRAIGHT)  {
+      analogWrite(PWR_A, pwr_control + rightEngineDiff);
+      analogWrite(PWR_B, pwr_control + leftEngineDiff);
       digitalWrite(DIR_A, LOW);
       digitalWrite(DIR_B, LOW);
     }
 
-    if (direction == RIGHT) {
-      analogWrite(PWR_A, pwr_control);
-      analogWrite(PWR_B, pwr_control);
+    if (direction == LEFT) {
+      analogWrite(PWR_A, pwr_control + rightEngineDiff);
+      analogWrite(PWR_B, pwr_control + leftEngineDiff);
       digitalWrite(DIR_A, HIGH);
       digitalWrite(DIR_B, LOW);
     }
 
-    if (direction == LEFT)  {
-      analogWrite(PWR_A, pwr_control);
-      analogWrite(PWR_B, pwr_control);
+    if (direction == RIGHT)  {
+      analogWrite(PWR_A, pwr_control + rightEngineDiff);
+      analogWrite(PWR_B, pwr_control + leftEngineDiff);
       digitalWrite(DIR_A, LOW);
       digitalWrite(DIR_B, HIGH);
     }

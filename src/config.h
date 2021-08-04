@@ -9,9 +9,11 @@
 #define DIR_B   12
 
 #define WHEEL_DIAM  12 //in centimeters
-#define ROTATION_SPEED  0.42 // 25 RPM, 0.4167 rotztion for second
+#define ROTATION_SPEED  0.33 // 20 RPM, 0.33333 rotations for second
 
 unsigned int enginePWR = 100;
+int leftEngineDiff = 0;
+int rightEngineDiff = 0;
 
 //CUTTER
 #define CUTTER_PIN  8

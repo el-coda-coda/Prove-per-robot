@@ -11,52 +11,30 @@ int segmentCURVE(int deg, String direction, int deg_set){
     return compassReadMedia();
 }
 
-void segmentStraight(String direction, int distance){ // distance in BOH
+String segmentSTRAIGHT (String direction, int distance){
+    firstCompass(); //this is for have a "true" degSet
     const int degSet = compassReadMedia();
-    int standardVel = enginePWR;
-    delay(50);
-    write.info(String("STARTED STRAIGHT"));
-    write.info(String(calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)) + String(" ms"));
-    write.info(String(millis()) + String(" ms"));
-    long set_time = millis();
-    while((millis() - set_time) <= calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED)){
-        write.info("IN THE WHILE");
-        write.info(String("COMPASS: ") + compassStraight(degSet));
-        int i = 0;
-        engineON(enginePWR, STRAIGHT);
-        while(compassStraight(degSet).startsWith("RIGHT")){
-            engineDIR(standardVel, standardVel - i);
-            i++; 
-            write.info("GOING LEFT");
-        }  
-        engineON(50, STRAIGHT);
-        while(compassStraight(degSet).startsWith("LEFT")){
-            engineDIR(standardVel - i, standardVel);
-            i++;
-            write.info("GOING RIGHT");
-        }
-        String command = Serial.readString();
-        if (command.startsWith("-STOP")) break;
-    }
-    write.info("FINISHED WHILE");
-    write.info(String("STRAIGHT comleted in " + String(millis() - set_time) + " ms"));
-    engineOFF();
-}
-
-String segmentSTRAIGHT (String direction){
     long timeSet = millis();
+    long timeToArrive = calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED);
     String result = "OK";
     while((!write.stop()) && (result = "OK")){
         if (!engineON(enginePWR, direction)){
             engineOFF();
+            rightEngineDiff, leftEngineDiff = 0;
             String curveDirection = angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2));
             if(curveDirection.startsWith(RIGHT))    curveDirection = RIGHT;
             if(curveDirection.startsWith(LEFT)) curveDirection = LEFT;
             write.info("CURVE " + String(curveDirection));
             result = curveDirection;
         }
+        if(compassStraight(degSet) != STRAIGHT){
+            if(compassStraight(degSet) == RIGHT)    rightEngineDiff -=2;
+            if(compassStraight(degSet) == LEFT)     leftEngineDiff -=2;
+        }
+        else    rightEngineDiff, leftEngineDiff = 0;
     }
     engineOFF();
     write.verbose("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms");
+    rightEngineDiff, leftEngineDiff = 0;
     return result;
 }
