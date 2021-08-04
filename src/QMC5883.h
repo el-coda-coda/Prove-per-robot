@@ -17,8 +17,8 @@ void firstCompass(){
   while ((deg_in > (deg_last + 1)) || (deg_in < (deg_last - 1))){
     deg_last = deg_in;
     deg_in = sensor.compass();
-    write.info(String("NEW DEG: " + String(deg_in)));
-    write.info(String("LAST DEG: " + String(deg_last)));
+    write.info(String("NEW DEG: ") + String(deg_in));
+    write.info(String("LAST DEG: ") + String(deg_last));
     delay(500);
   }
   write.debug(String("FIRST COMPASS completed in: " + String(millis() - timeSet) + " ms"));
@@ -104,23 +104,23 @@ String compassStraight (int deg_set){
     write.info(String("DEG SET: " + String(deg_set)));
     int deg_diff = 0;
     if (deg_set > deg){
-        result = "RIGHT";
-        deg_diff = deg_set - deg;
+      result = "RIGHT";
+      deg_diff = deg_set - deg;
     }
     
     if(deg_set < deg - 300){
-        result = "RIGHT";
-        deg_diff = 360 - deg_set + deg;
+      result = "RIGHT";
+      deg_diff = 360 - deg_set + deg;
     }
 
     if (deg_set < deg ){
-        result = "LEFT";
-        deg_diff = deg - deg_set;
+      result = "LEFT";
+      deg_diff = deg - deg_set;
     }
 
     if (deg_set > deg + 300){
-        result = "LEFT";
-        deg_diff = 360 - deg + deg_set;
+      result = "LEFT";
+      deg_diff = 360 - deg + deg_set;
     }
     write.info(String("C_STRAIGHT FINISHED IN " + String(millis() - timeSet) + " ms"));
     return String(result + " " + String(deg_diff));

@@ -17,7 +17,7 @@ unsigned int enginePWR = 100;
 #define CUTTER_PIN  8
 #define CUTTER_AMP_PIN  1 //the analog pin where read the consumption of the motor for cutting
 #define CUT_OFF 1000
-#define CUT_ON  2000
+#define CUT_ON_MAX  2000
 
 int cutterOffset = 0;
 float cutterScale = 0.185;  //motor cut current scale V/A

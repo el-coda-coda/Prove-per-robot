@@ -8,18 +8,18 @@ String angleUS (int distanceRight, int distanceLeft){
             distanceMax = distanceRight - distanceOffSet;
 
             deg = calc.distaneToDeg(distanceMax, WIDTH);   
-            result = String(RIGHT + " " + String(deg));
+            result = RIGHT;// + " " + String(deg);
         } 
         if (distanceLeft > distanceRight){
             distanceOffSet = distanceRight;
             distanceMax = distanceLeft - distanceOffSet;
 
             deg = calc.distaneToDeg(distanceMax, WIDTH); 
-            result = String(LEFT + "  " + String(deg));
+            result = LEFT; //+ "  " + String(deg);
         }
-        if (distanceLeft == distanceRight)  result = String(LEFT + "  " + String(90)); //this is just a personal desicion, anywey we can decide to make the robot turn right or go back
+        if (distanceLeft == distanceRight)  result = LEFT;// + "  " + String(90); //this is just a personal desicion, anywey we can decide to make the robot turn right or go back
     }
     else    result = STRAIGHT;
-    write.info(String("angleUS: " + String(result)));
+    write.info(String("angleUS: ") + String(result));
     return result;
 }

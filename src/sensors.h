@@ -9,7 +9,7 @@ class sensors {
     float cutter();
     float panelVolts();
     float panelAmp();
-    long ultrasonic(int trig, int echo);
+    int ultrasonic(int trig, int echo);
 };
 
 void sensors::setup(){
@@ -114,8 +114,8 @@ float sensors::panelAmp()   {
 
 }
 
-long sensors::ultrasonic(int trig, int echo){
-    long distance;
+int sensors::ultrasonic(int trig, int echo){
+    int distance;
     long timeSet = millis();
     if(ultrasonic_enabled){
         digitalWrite(trig, LOW);

@@ -59,6 +59,7 @@ bool logging::stop(){
         }
         else return false;
     }
+    return false;
 }
 
 logging write;
