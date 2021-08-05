@@ -38,11 +38,8 @@ void loop() {
     Serial.print("[command] " + String(command) + " " + String(F) + " recieved");
     F++;
   }
-    if (command.startsWith("-STRAIGHT")){
-      //int x = (command.substring(9).toInt());
-      //segmentStraight(STRAIGHT, x);
-      engineON(enginePWR, STRAIGHT);
-    }
+    if (command.startsWith("-STRAIGHT")) write.info(String(segmentStraight(STRAIGHT, 100)));
+    if (command.startsWith("-BACK")) write.info(String(segmentStraight(BACK, 100)));
     if (command.startsWith("-RIGHT")){
       int x = (command.substring(6).toInt());
       write.info(String(command.substring(6)));
@@ -54,7 +51,6 @@ void loop() {
       segmentCURVE(x, LEFT, sensor.compass());
     }
     if (command.startsWith("-STOP")) engineOFF();
-    if (command.startsWith("-BACK"))  engineON(enginePWR, BACK);
     if (command.startsWith("-ENGINE POWER")){
       int x = (command.substring(13).toInt());
       write.info(String(command.substring(7)));
@@ -84,18 +80,6 @@ void loop() {
     if (command.startsWith("-PANEL VOLT"))  write.info(String(sensor.panelVolts()));
     if (command.startsWith("-ENABLE US")) ultrasonic_enabled = true;
     if (command.startsWith("-DISABLE US")) ultrasonic_enabled = false;
-    //if (command.startsWith("-DISTANCE 1")) write.info(String(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1)));
-    //if (command.startsWith("-DISTANCE 2")) write.info(String(sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
-    /*if (command.startsWith("-US SCREENING")){
-      while(!write.stop()){
-        write.info("1: ");
-        write.info(String(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1)));
-        write.info("2: ");
-        write.info(String(sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
-        delay(200);
-      }
-    }*/
-    if (command.startsWith("-US STRAIGHT")) write.info(String(segmentStraight(STRAIGHT, 100)));
     if (command.startsWith("-ANGLE US"))  write.info(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
-    command = " ";
+    command = "";
 }

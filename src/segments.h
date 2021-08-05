@@ -20,7 +20,8 @@ String segmentStraight (String direction, int distance){
     while((!write.stop()) && (result = "OK") && (millis() < timeToArrive)){
         if (!engineON(enginePWR, direction)){
             engineOFF();
-            rightEngineDiff, leftEngineDiff = 0;
+            rightEngineDiff = 0;
+            leftEngineDiff = 0;
             String curveDirection = angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2));
             if(curveDirection.startsWith(RIGHT))    curveDirection = RIGHT;
             if(curveDirection.startsWith(LEFT)) curveDirection = LEFT;
@@ -31,10 +32,14 @@ String segmentStraight (String direction, int distance){
             if(compassStraight(degSet) == RIGHT)    rightEngineDiff -=2;
             if(compassStraight(degSet) == LEFT)     leftEngineDiff -=2;
         }
-        else    rightEngineDiff, leftEngineDiff = 0;
+        else{
+        rightEngineDiff = 0;
+        leftEngineDiff = 0;
+        }
     }
     engineOFF();
-    write.verbose("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms; TimeToArrive: " + String(millis() - timeToArrive));
-    rightEngineDiff, leftEngineDiff = 0;
+    write.info("segmentSTRAIGHT completed in: " + String(millis() - timeSet) + " ms; TimeToArrive: " + String(millis() - timeToArrive));
+    rightEngineDiff = 0;
+    leftEngineDiff = 0;
     return result;
 }

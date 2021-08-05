@@ -68,7 +68,7 @@ int logLevel;
 String FLAT = "FLAT";
 String CUSTOM = "CUSTOM";
 bool LOG_SERIAL = true; // or OFF for don't log on the serial
-bool LOG_DISPLAY = true; // or OFF for don't log on the display
+bool LOG_DISPLAY = false; // or OFF for don't log on the display
 
 //MATHS
 #define RADIANTS_TO_DEG 57.30     // 1 deg = 0.0174533 radians
