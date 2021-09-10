@@ -13,8 +13,8 @@
 #include <QMC5883.h>
 #include <segments.h>
 #include <cutting.h>
+#include <auto-drive.h>
 
-int F = 0;
 String command = "";
 void setup(){
   Serial.begin(115200);
@@ -35,9 +35,7 @@ void setup(){
 void loop() {
   if(Serial.available()){
     command = Serial.readString();
-    Serial.print("[command] " + String(command) + " " + String(F) + " recieved");
-    F++;
-  }
+    Serial.print("[command] " + String(command));
     if (command.startsWith("-STRAIGHT")) write.info(String(segmentStraight(STRAIGHT, 100)));
     if (command.startsWith("-BACK")) write.info(String(segmentStraight(BACK, 100)));
     if (command.startsWith("-RIGHT")){
@@ -53,7 +51,7 @@ void loop() {
     if (command.startsWith("-STOP")) engineOFF();
     if (command.startsWith("-ENGINE POWER")){
       int x = (command.substring(13).toInt());
-      write.info(String(command.substring(7)));
+      write.info("POWER: " + String(x) + "%");
       enginePWR = x;
     }
     if (command.startsWith("-CALIBRATION")){
@@ -65,21 +63,14 @@ void loop() {
     if (command.startsWith("-CUT OFF")) cutter.off();
     if (command.startsWith("-CUT ON")){
       int x = (command.substring(7).toInt());
-      write.info(String(command.substring(7)));
+      write.info("POWER: " + String(x) + "%");
       cutter.on(x);
     }
     if (command.startsWith("-CUT MAX")) esc.writeMicroseconds(2000);
-    if (command.startsWith("-LVL INFO")) logLevel = INFO;
-    if (command.startsWith("-LVL DEBUG")) logLevel = DEBUG;
-    if (command.startsWith("-LVL VERBOSE")) logLevel = VERBOSE;
     if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
     if (command.startsWith("-FIRST COMPASS")) firstCompass();
-    if (command.startsWith("-ENABLE CUT")) cut_enabled  = true;
-    if (command.startsWith("-DISABLE CUT")) cut_enabled  = false;
     if (command.startsWith("-PANEL AMP")) write.info(String(sensor.panelAmp()));
     if (command.startsWith("-PANEL VOLT"))  write.info(String(sensor.panelVolts()));
-    if (command.startsWith("-ENABLE US")) ultrasonic_enabled = true;
-    if (command.startsWith("-DISABLE US")) ultrasonic_enabled = false;
     if (command.startsWith("-ANGLE US"))  write.info(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
-    command = "";
+  }
 }
