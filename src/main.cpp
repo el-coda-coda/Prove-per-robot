@@ -66,11 +66,11 @@ void loop() {
       write.info("POWER: " + String(x) + "%");
       cutter.on(x);
     }
-    if (command.startsWith("-CUT MAX")) esc.writeMicroseconds(2000);
     if (command.startsWith("-COMPASS")) write.info(String(sensor.compass()));
     if (command.startsWith("-FIRST COMPASS")) firstCompass();
     if (command.startsWith("-PANEL AMP")) write.info(String(sensor.panelAmp()));
     if (command.startsWith("-PANEL VOLT"))  write.info(String(sensor.panelVolts()));
     if (command.startsWith("-ANGLE US"))  write.info(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)));
+    if (command.startsWith("-AUTO DRIVE")) randomDrive(100);
   }
 }

@@ -17,6 +17,7 @@ String segmentStraight (String direction, int distance){
     long timeSet = millis();
     long timeToArrive = calc.rotationTime(WHEEL_DIAM, distance, ROTATION_SPEED) + timeSet;
     String result = "OK";
+    engineON(enginePWR, direction);
     while((!write.stop()) && (result = "OK") && (millis() < timeToArrive)){
         if (!engineON(enginePWR, direction)){
             engineOFF();
