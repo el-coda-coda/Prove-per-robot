@@ -1,4 +1,4 @@
-bool engineON(int pwr, String direction)  {
+bool engineON(int pwr, int direction)  {
   float pwr_control = pwr * 2.55;
   if(angleUS(sensor.ultrasonic(TRIG_PIN_1, ECHO_PIN_1), sensor.ultrasonic(TRIG_PIN_2, ECHO_PIN_2)) == STRAIGHT){
     if (direction == BACK)  {

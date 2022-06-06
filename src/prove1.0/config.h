@@ -59,11 +59,11 @@ int deg_threshold;
 #define INFO    3
 #define DEBUG   2
 #define VERBOSE 1
-String dir;
-String LEFT = "LEFT";
-String RIGHT = "RIGHT";
-String STRAIGHT = "STRAIGHT";
-String BACK = "BACK";
+#define LEFT    -90
+#define RIGHT   90
+#define STRAIGHT 100
+#define BACK    -100
+
 int logLevel;
 String FLAT = "FLAT";
 String CUSTOM = "CUSTOM";
