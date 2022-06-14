@@ -23,7 +23,11 @@ void cutter::setup(){
 bool cutter::on(int power){
     int cutSpeed = map((power * cutterInputScale), 0, 100, CUT_OFF, CUT_ON);
     if(cutEnabled)  esc.writeMicroseconds(cutSpeed);
-    else    Serial.println("cutEnabled FALSE");
+    else{
+        Serial.println("cutEnabled FALSE");
+        return false;
+    }
+    return true;
 }
 
 void cutter::off(){

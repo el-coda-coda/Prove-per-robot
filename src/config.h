@@ -5,8 +5,8 @@
 #define DIR_B   12
 
 int engineThereshold = 100;
-int leftEnginePerc = 100/100;
-int rightEnginePerc = 100/100;
+float leftEnginePerc = 100/100;
+float rightEnginePerc = 100/100;
 
 //cutter engine
 #define CUTTER_PIN  8
@@ -16,14 +16,15 @@ int rightEnginePerc = 100/100;
 
 bool cutEnabled = false;
 float cutterInputScale = 0.88;
+float cutterPerc = (50/200 + 0.5); // da 0/200 a 100/200 è il range di potenza
 
 //general communications
 #define ON  1
 #define OFF 0
 
-long back = 1000;
-long forward = 2000;
-long right = 3000;
-long left = 4000;
+long back = 10000;
+long forward = 20000;
+long right = 30000;
+long left = 40000;
 
 long output = 0;

@@ -16,8 +16,11 @@ void setup(){
 }
 
 void loop(){
+    //driving engines 
     motor.on(engineThereshold, commandRead());
     if(commandRead() == OFF)    motor.off();
-
+    cut.on(commandRead());
+    //cutter engine
+    if(commandRead() == CUT_OFF)    cut.off();
     delay(200);
 }
