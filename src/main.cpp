@@ -6,11 +6,13 @@
 #include "cutter.h"
 
 engine motor;
+cutter cut;
 
 void setup(){
     Serial.begin(115200);
     motor.setup();
     motor.off();
+    cut.setup();
 }
 
 void loop(){
