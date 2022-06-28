@@ -1,26 +1,30 @@
 #include <Arduino.h>
 #include <Servo.h>
+#include <Wire.h>
 #include "config.h"
 #include "engine.h"
-#include "serialReader.h"
 #include "cutter.h"
-
-engine motor;
-cutter cut;
+#include "sensors.h"
+#include "serialReader.h"
 
 void setup(){
     Serial.begin(115200);
+    delay(1000);
+    Serial.println("HELLO :)");
     motor.setup();
     motor.off();
     cut.setup();
+
+    //pinMode
+    pinMode(SWITCH_PANEL_PIN, OUTPUT);
 }
 
 void loop(){
+    //general
+    turnOff();
     //driving engines 
     motor.on(engineThereshold, commandRead());
-    if(commandRead() == OFF)    motor.off();
-    cut.on(commandRead());
     //cutter engine
-    if(commandRead() == CUT_OFF)    cut.off();
-    delay(200);
+    cut.on(commandRead());
+    delay(500);
 }
