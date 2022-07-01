@@ -33,20 +33,19 @@ bool engine::on(int power, int direction){
         }
         if(direction == left){
             analogWrite(PWR_A, realPower * rightEnginePerc);
-            analogWrite(PWR_B, realPower * leftEnginePerc);
+            analogWrite(PWR_B, realPower * leftEnginePerc * curveSmoothness);
             digitalWrite(DIR_A, HIGH);
-            digitalWrite(DIR_B, LOW);
+            digitalWrite(DIR_B, HIGH);
             return true;
         }
         if(direction == right){
-            analogWrite(PWR_A, realPower * rightEnginePerc);
+            analogWrite(PWR_A, realPower * rightEnginePerc * curveSmoothness);
             analogWrite(PWR_B, realPower * leftEnginePerc);
-            digitalWrite(DIR_A, LOW);
+            digitalWrite(DIR_A, HIGH);
             digitalWrite(DIR_B, HIGH);
             return true;
         }
         if(direction == OFF){
-            //cutternSerial.println("Engine Stop");
             analogWrite(PWR_A, 0);
             analogWrite(PWR_B, 0);
             digitalWrite(DIR_A, HIGH);

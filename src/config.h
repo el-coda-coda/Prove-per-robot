@@ -5,8 +5,9 @@
 #define DIR_B   12
 
 int engineThereshold = 100;
-float leftEnginePerc = 100/100;
-float rightEnginePerc = 100/100;
+float leftEnginePerc = 100/100; //from 0/100 to 100/100 
+float rightEnginePerc = 100/100; //from 0/100 to 100/100
+float curveSmoothness = 50/100; //from 0/100 to 100/100 for do not have to do too much difficult curves
 
 //cutter engine
 #define CUTTER_PIN  8
@@ -14,9 +15,9 @@ float rightEnginePerc = 100/100;
 #define CUT_OFF 1000
 #define CUT_ON  2000
 
-bool cutEnabled = false;
+bool cutEnabled = true;
 float cutterInputScale = 0.88;
-float cutterPerc = 50; // da 0% a 100%
+float cutterPerc = 40; // from 0 to 100
 
 //solar pannel
 #define SWITCH_PANEL_PIN   7
@@ -35,12 +36,12 @@ float cutterPerc = 50; // da 0% a 100%
 bool drivEngineMessage = false;
 bool cutEngineMessage = false;
 bool generalMessage = false;
-bool batteryMessage = false;
+bool sensorMessage = false;
 
-long back = 10000;
-long forward = 20000;
-long right = 30000;
-long left = 40000;
-long stop = 50000;
+long back = 1000;
+long forward = 2000;
+long right = 3000;
+long left = 4000;
+long stop = 5000;
 
 long output = 0;

@@ -22,7 +22,7 @@ void setup(){
 void loop(){
     //general
     turnOff();
-    //driving engines 
+    //driving engines
     motor.on(engineThereshold, commandRead());
     //cutter engine
     cut.on(commandRead());
